@@ -105,6 +105,19 @@ public class ListADT<T> implements InterfaceADT<T>{
 
         return -1;
     }
+
+    @Override
+    public  ListADT<Integer> findAll(T element){
+        ListADT<Integer> indexList = new ListADT<>();
+
+        for (int i = 0; i <= numberOfElement - 1; i++){
+            if (array[i].equals(element)){
+                indexList.add(i);
+            }
+        }
+
+        return indexList;
+    }
     
     @Override
     public int len(){
@@ -133,7 +146,7 @@ public class ListADT<T> implements InterfaceADT<T>{
 
 
     public static void main(String[] args) {
-        ListADT<String> list = new ListADT<String>();
+        ListADT<String> list = new ListADT<>();
 
         list.add("abc");
         System.out.println(list.toString());
