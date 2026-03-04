@@ -58,6 +58,13 @@ public interface InterfaceADT<T> {
      * @return the first index of the matching element or -1 for no match is found
      */
     public int find(T element);
+
+    /**
+     * Task: Find all the index of the element that match with the given element 
+     * @param element the element to search for
+     * @return a list of index of the matching element or an empty list for no match is found
+     */
+    public ListADT<Integer> findAll(T element);
     
     /**
      * Task: Gets the number of element in the list
