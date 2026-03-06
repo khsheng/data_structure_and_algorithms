@@ -1,4 +1,5 @@
 package ADT;
+import java.util.Comparator;
 
 /**
  *
@@ -46,6 +47,12 @@ public interface InterfaceADT<T> {
     public String toString();
 
     /**
+     * Task: Converts the list to an array
+     * @return an array containing all elements in the list in order
+     */
+    public T[] toArray();
+
+    /**
      * Task: Retrieves the element at a given position in the list
      * @param index an integer that indicates the position of the element
      * @return a reference to the indicated element
@@ -71,4 +78,10 @@ public interface InterfaceADT<T> {
      * @return the integer number of the element currently in the list
      */
     public int len();
+
+    /**
+     * Task: Sort the elements in the list based on a given comparator
+     * @param comparator the comparator to determine the order of the elements
+     */
+    public void sort(Comparator<T> comparator);
 }
