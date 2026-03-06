@@ -1,5 +1,8 @@
 package ADT;
 
+import java.util.Arrays;
+import  java.util.Comparator;
+
 /**
  *
  * @author KHOO HOU SHENG
@@ -7,7 +10,7 @@ package ADT;
 public class ListADT<T> implements InterfaceADT<T>{
     private T[] array;
     private int numberOfElement = 0;
-    private static final int DEFAULT_CAPACITY = 5;
+    private static final int DEFAULT_CAPACITY = 8;
 
     public ListADT(){
         array = (T[]) new Object[DEFAULT_CAPACITY];
@@ -124,6 +127,24 @@ public class ListADT<T> implements InterfaceADT<T>{
         return numberOfElement;
     }
 
+    @Override
+    public void sort(Comparator<T> comparator) {
+        T[] sortting_array = toArray();
+        Arrays.sort(sortting_array,  comparator);
+
+        array = sortting_array;
+    }
+
+    @Override
+    public T[] toArray(){
+        T[] newArray = (T[]) new Object[numberOfElement];
+        for (int i = 0; i < numberOfElement; i++){
+            newArray[i] = array[i];
+        }
+
+        return newArray;
+    }
+
     private boolean isArrayFull(){
         return numberOfElement == array.length;
     }
@@ -145,11 +166,16 @@ public class ListADT<T> implements InterfaceADT<T>{
     }
 
 
-    public static void main(String[] args) {
-        ListADT<String> list = new ListADT<>();
 
-        list.add("abc");
-        System.out.println(list.toString());
+    public static void main(String[] args) {
+        ListADT<Integer> list = new ListADT<>();
+
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        System.out.println("Original list: " + list.toString());
+        list.sort((a,b) -> b - a);
+        System.out.println("Sorted list: " + list.toString());
     }
 }
 
