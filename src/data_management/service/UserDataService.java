@@ -4,7 +4,7 @@ import ADT.ListADT;
 import data_management.entity.*;
 
 public class UserDataService implements CrudService<UserInfo>{
-    private ListADT<UserInfo> userList;
+    public ListADT<UserInfo> userList;
 
     public UserDataService()  {
         userList = new ListADT<>();
@@ -20,13 +20,34 @@ public class UserDataService implements CrudService<UserInfo>{
         userList.remove(index);
     }
 
-    // To do: update method should accept update only for one type of data (chenge Name only) to avoid the bug that when update, the id also will change
     @Override
-    public void update(int index, UserInfo user) {
-        userList.replace(index, user);
+    public void update(int index, String name, int age, String position) {
+        if (!(userList.get(index) instanceof Staff)) {
+            throw new IllegalArgumentException("User at index " + index + " is not a Staff member.");
+        }
+
+        Staff updateUser = (Staff) userList.get(index);
+
+        updateUser.setName(name);
+        updateUser.setAge(age);
+        updateUser.setPosition(position);
+
     }
 
-    // To do: This code is generate by AI, and notfunctional, need to be fixed
+    @Override
+    public void update(int index, String name, int age, String program, int borrowedBooks) {
+        if (!(userList.get(index) instanceof Student)) {
+            throw new IllegalArgumentException("User at index " + index + " is not a Student.");
+        }
+
+        Student updateUser = (Student) userList.get(index);
+
+        updateUser.setName(name);
+        updateUser.setAge(age);
+        updateUser.setProgram(program);
+        updateUser.setBorrowedBooks(borrowedBooks);
+    }
+
     @Override
     public ListADT<UserInfo> search(java.util.function.Predicate<UserInfo> predicate) {
         ListADT<UserInfo> result = new ListADT<>();
@@ -73,7 +94,6 @@ public class UserDataService implements CrudService<UserInfo>{
         Staff staffMember = (Staff) staff;
         newString.append("      Position: ").append(staffMember.getPosition()).append(", \n");
         return newString.toString();
-
     }
 
     public String studentToString(UserInfo student, StringBuilder newString) {
@@ -90,7 +110,8 @@ public class UserDataService implements CrudService<UserInfo>{
         userService.add(new Staff("Bob", 25, "Developer"));
         userService.add(new Student("Charlie", 20, "Computer Science", 2));
         userService.add(new Student("David", 22, "Mathematics", 5));
-        userService.update(1, new Staff("Bob", 26, "Senior Developer"));
-        System.out.println(userService);
+        userService.update(2, "Charlie", 21, "Software Engineering", 3);
+        userService.update(1, "Bob", 26, "Senior Developer");
+        System.out.println(userService.userList.get(0).getClass());
     }
 }

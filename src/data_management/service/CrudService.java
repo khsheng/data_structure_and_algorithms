@@ -22,11 +22,23 @@ public interface CrudService<T> {
     public void remove(int index);
 
     /**
-     * Task: Replace (update) a record at a specified position
+     * Task: Replace (update) a record for Staff only
      * @param index the integer that specifies the position to replace the record
-     * @param item the object to replace the existing record
+     * @param name the updated name
+     * @param age the updated age
+     * @param position the updated position
      */
-    public void update(int index, T item);
+    public void update(int index, String name, int age, String position);
+
+    /**
+     * Task: Replace (update) a record for Student only
+     * @param index the integer that specifies the position to replace the record
+     * @param name the updated name
+     * @param age the updated age
+     * @param program the updated program
+     * @param borrowedBooks the updated number of borrowed books
+     */
+    public void update(int index, String name, int age, String program, int borrowedBooks);
 
     /**
      * Task: Search records based on a condition
