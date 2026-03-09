@@ -3,7 +3,7 @@ package data_management.service;
 import ADT.ListADT;
 import data_management.entity.*;
 import java.util.Comparator;
-import java.util.function.Predicate;
+import java.util.function.*;
 
 public class UserDataService implements CrudService<UserInfo>{
     public ListADT<UserInfo> userList;
@@ -30,31 +30,9 @@ public class UserDataService implements CrudService<UserInfo>{
     }
 
     @Override
-    public void update(int index, String name, int age, String position) {
-        if (!(userList.get(index) instanceof Staff)) {
-            throw new IllegalArgumentException("User at index " + index + " is not a Staff member.");
-        }
-
-        Staff updateUser = (Staff) userList.get(index);
-
-        updateUser.setName(name);
-        updateUser.setAge(age);
-        updateUser.setPosition(position);
-
-    }
-
-    @Override
-    public void update(int index, String name, int age, String program, int borrowedBooks) {
-        if (!(userList.get(index) instanceof Student)) {
-            throw new IllegalArgumentException("User at index " + index + " is not a Student.");
-        }
-
-        Student updateUser = (Student) userList.get(index);
-
-        updateUser.setName(name);
-        updateUser.setAge(age);
-        updateUser.setProgram(program);
-        updateUser.setBorrowedBooks(borrowedBooks);
+    public void update(int index, Consumer<UserInfo> set) {
+        UserInfo updateUser = userList.get(index);
+        set.accept(updateUser);
     }
 
     @Override
@@ -72,6 +50,30 @@ public class UserDataService implements CrudService<UserInfo>{
     public ListADT<UserInfo> sort(Comparator<UserInfo> comparator) {
         userList.sort(comparator);
         return userList;
+    }
+
+    // todo: implement borrowBook and returnBook methods
+    // todo: implement store Book object into setBorrewedBooks
+    public boolean borrowBook(int studentID) {
+        ListADT<Integer> studentIndex = userList.findAll(user -> user.getId() == studentID);
+        if (studentIndex.len() == 1) {
+            UserInfo user = userList.get(studentIndex.get(0));
+            if (user instanceof Student student) {
+                if (student.canBorrow()) {
+                    student.setBorrowedBooks(student.getBorrowedBooks() + 1);
+                    return true;
+                }
+            } else {
+                throw new IllegalArgumentException("The user with the specified ID is not a student.");
+            }
+        } else if (studentIndex.len() == 0) {
+            throw new IllegalArgumentException("No user found with the specified ID.");
+
+        } else if (studentIndex.len() > 1) {
+            throw new IllegalStateException("Multiple users found with the specified ID.");
+        }
+
+        return false;
     }
 
     @Override
@@ -125,16 +127,17 @@ public class UserDataService implements CrudService<UserInfo>{
         userService.add(new Staff("Bob", 25, "Developer"));
         userService.add(new Student("Charlie", 20, "Computer Science", 2));
         userService.add(new Student("David", 22, "Mathematics", 5));
-        userService.update(2, "Zharlie", 21, "Software Engineering", 3);
-        userService.update(1, "Bob", 26, "Senior Developer");
-        System.out.println(userService.search(u -> u.getAge() > 25));
-
-        UserDataService newService = new UserDataService();
-        newService.add(userService.search(u -> u.getAge() > 25));
-        System.out.println(newService);
-
         System.out.println(userService);
-        userService.sort((a, b) -> b.getName().compareTo(a.getName()));
+        userService.update(
+            2,
+            studnet -> {
+                Student s = (Student) studnet;
+                s.setAge(21);
+                s.setName("Charliesss");
+                s.setProgram("Software Engineering");
+            }
+         );
         System.out.println(userService);
+
     }
 }

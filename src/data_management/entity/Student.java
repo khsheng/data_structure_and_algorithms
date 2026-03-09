@@ -5,6 +5,7 @@ public class Student extends UserInfo {
     private int borrowedBooks;
     private static final int MAXBORROWS = 5;
 
+    // todo: using the data type book ID as the data type of borrowedBooks instead of int, and change the name to borrowedBookIds
     public Student(String name, int age, String program, int borrowedBooks) {
         super(name, age, "student");
         this.program = program;

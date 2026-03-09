@@ -1,7 +1,7 @@
 package data_management.entity;
 
 public abstract class UserInfo {
-    public static int counter = 1;
+    private static int counter = 1;
 
     private int id;
     private String name;
