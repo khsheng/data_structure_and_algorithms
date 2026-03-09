@@ -3,10 +3,10 @@ package data_management.entity;
 public abstract class UserInfo {
     public static int counter = 1;
 
-    public int id;
-    public String name;
-    public int age;
-    public String role;
+    private int id;
+    private String name;
+    private int age;
+    private String role;
 
     public UserInfo(String name, int age, String role) {
         this.id = counter;
@@ -17,19 +17,19 @@ public abstract class UserInfo {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public int getAge() {
-        return age;
+        return this.age;
     }
 
     public String getRole() {
-        return role;
+        return this.role;
     }
 
     public void setName(String name) {

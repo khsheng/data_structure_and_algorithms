@@ -1,5 +1,6 @@
 package ADT;
 import java.util.Comparator;
+import java.util.function.Predicate;
 
 /**
  *
@@ -73,6 +74,7 @@ public interface InterfaceADT<T> {
      */
     public ListADT<Integer> findAll(T element);
     
+    public ListADT<Integer> findAll(Predicate<T> condition);
     /**
      * Task: Gets the number of element in the list
      * @return the integer number of the element currently in the list

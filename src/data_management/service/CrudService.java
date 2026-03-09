@@ -16,6 +16,12 @@ public interface CrudService<T> {
     public void add(T item);
 
     /**
+     * Task: Add multiple records
+     * @param items a list of objects to be added as new entries
+     */
+    public void add(ListADT<T> items);
+
+    /**
      * Task: Remove a record at a specified position
      * @param index the integer that specifies the position to remove the record
      */
@@ -41,9 +47,9 @@ public interface CrudService<T> {
     public void update(int index, String name, int age, String program, int borrowedBooks);
 
     /**
-     * Task: Search records based on a condition
-     * @param predicate a condition to filter records
-     * @return a list of records that match the condition
+     * Task: Search for records that match the specified criteria
+     * @param predicate the condition to filter the records
+     * @return a list of records that match the specified criteria
      */
     public ListADT<T> search(Predicate<T> predicate);
 

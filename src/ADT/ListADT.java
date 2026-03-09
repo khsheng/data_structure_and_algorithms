@@ -1,7 +1,8 @@
 package ADT;
 
 import java.util.Arrays;
-import  java.util.Comparator;
+import java.util.Comparator;
+import java.util.function.Predicate;
 
 /**
  *
@@ -119,6 +120,28 @@ public class ListADT<T> implements InterfaceADT<T>{
             }
         }
 
+        if (indexList.len() == 0) {
+            indexList.add(-1);
+        }
+
+        return indexList;
+    }
+
+
+    @Override
+    public ListADT<Integer> findAll(Predicate<T> condition) {
+        ListADT<Integer> indexList = new ListADT<>();
+
+        for (int i = 0; i < numberOfElement; i++) {
+            if (condition.test(array[i])) {
+                indexList.add(i);
+            }
+        }
+
+        if (indexList.len() == 0) {
+            indexList.add(-1);
+        }
+
         return indexList;
     }
     
@@ -176,6 +199,8 @@ public class ListADT<T> implements InterfaceADT<T>{
         System.out.println("Original list: " + list.toString());
         list.sort((a,b) -> b - a);
         System.out.println("Sorted list: " + list.toString());
+
+        System.out.println("Indices of element 2: " + list.findAll(a -> a == 2));
     }
 }
 

@@ -12,11 +12,11 @@ public class Student extends UserInfo {
     }
 
     public String getProgram() {
-        return program;
+        return this.program;
     }
 
     public int getBorrowedBooks() {
-        return borrowedBooks;
+        return this.borrowedBooks;
     }
 
     public void setBorrowedBooks(int borrowedBooks) {

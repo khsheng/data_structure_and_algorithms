@@ -2,6 +2,8 @@ package data_management.service;
 
 import ADT.ListADT;
 import data_management.entity.*;
+import java.util.Comparator;
+import java.util.function.Predicate;
 
 public class UserDataService implements CrudService<UserInfo>{
     public ListADT<UserInfo> userList;
@@ -13,6 +15,13 @@ public class UserDataService implements CrudService<UserInfo>{
     @Override
     public void add(UserInfo user) {
         userList.add(user);
+    }
+
+    @Override
+    public void add(ListADT<UserInfo> users) {
+        for (int i = 0; i < users.len(); i++) {
+            userList.add(users.get(i));
+        }
     }
 
     @Override
@@ -49,15 +58,20 @@ public class UserDataService implements CrudService<UserInfo>{
     }
 
     @Override
-    public ListADT<UserInfo> search(java.util.function.Predicate<UserInfo> predicate) {
+    public ListADT<UserInfo> search(Predicate<UserInfo> parameters) {
+        ListADT<Integer> matchedIndex = userList.findAll(parameters);
         ListADT<UserInfo> result = new ListADT<>();
-        for (int i = 0; i < userList.len(); i++) {
-            UserInfo user = userList.get(i);
-            if (predicate.test(user)) {
-                result.add(user);
-            }
+        
+        for (int i = 0; i < matchedIndex.len(); i++) {
+            result.add(userList.get(matchedIndex.get(i)));
         }
+
         return result;
+    }
+
+    public ListADT<UserInfo> sort(Comparator<UserInfo> comparator) {
+        userList.sort(comparator);
+        return userList;
     }
 
     @Override
@@ -106,12 +120,21 @@ public class UserDataService implements CrudService<UserInfo>{
 
     public static void main(String[] args) {
         UserDataService userService = new UserDataService();
-        userService.add(new Staff("Alice", 30, "Manager"));
+        UserInfo newUser = new Staff("Alice", 30, "Manager");
+        userService.add(newUser);
         userService.add(new Staff("Bob", 25, "Developer"));
         userService.add(new Student("Charlie", 20, "Computer Science", 2));
         userService.add(new Student("David", 22, "Mathematics", 5));
-        userService.update(2, "Charlie", 21, "Software Engineering", 3);
+        userService.update(2, "Zharlie", 21, "Software Engineering", 3);
         userService.update(1, "Bob", 26, "Senior Developer");
-        System.out.println(userService.userList.get(0).getClass());
+        System.out.println(userService.search(u -> u.getAge() > 25));
+
+        UserDataService newService = new UserDataService();
+        newService.add(userService.search(u -> u.getAge() > 25));
+        System.out.println(newService);
+
+        System.out.println(userService);
+        userService.sort((a, b) -> b.getName().compareTo(a.getName()));
+        System.out.println(userService);
     }
 }
