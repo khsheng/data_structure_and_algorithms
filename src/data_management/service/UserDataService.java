@@ -6,11 +6,7 @@ import java.util.Comparator;
 import java.util.function.*;
 
 public class UserDataService implements CrudService<UserInfo>{
-    public ListADT<UserInfo> userList;
-
-    public UserDataService()  {
-        userList = new ListADT<>();
-    }
+    public static ListADT<UserInfo> userList = new ListADT<>();
 
     @Override
     public void add(UserInfo user) {
@@ -52,30 +48,6 @@ public class UserDataService implements CrudService<UserInfo>{
         return userList;
     }
 
-    // todo: implement borrowBook and returnBook methods
-    // todo: implement store Book object into setBorrewedBooks
-    public boolean borrowBook(int studentID) {
-        ListADT<Integer> studentIndex = userList.findAll(user -> user.getId() == studentID);
-        if (studentIndex.len() == 1) {
-            UserInfo user = userList.get(studentIndex.get(0));
-            if (user instanceof Student student) {
-                if (student.canBorrow()) {
-                    student.setBorrowedBooks(student.getBorrowedBooks() + 1);
-                    return true;
-                }
-            } else {
-                throw new IllegalArgumentException("The user with the specified ID is not a student.");
-            }
-        } else if (studentIndex.len() == 0) {
-            throw new IllegalArgumentException("No user found with the specified ID.");
-
-        } else if (studentIndex.len() > 1) {
-            throw new IllegalStateException("Multiple users found with the specified ID.");
-        }
-
-        return false;
-    }
-
     @Override
     public String toString() {
         if (userList.len() == 0) return "[]";
@@ -115,29 +87,12 @@ public class UserDataService implements CrudService<UserInfo>{
     public String studentToString(UserInfo student, StringBuilder newString) {
         Student studentMember = (Student) student;
         newString.append("      program: ").append(studentMember.getProgram()).append(", \n");
-        newString.append("      borrowedBooks: ").append(studentMember.getBorrowedBooks()).append(", \n");
-        newString.append("      canBorrow: ").append(studentMember.canBorrow()).append(", \n");
+
+        for (int i = 0; i < studentMember.getBorrowedBooks().len(); i++) {
+            newString.append("      Borrowed Book ").append(i + 1).append(": ").append(studentMember.getBorrowedBooks().get(i).getTitle()).append(", \n");
+        }
+
+        newString.append("      remainingBorrowLimit: ").append(studentMember.getRemainingBorrowLimit()).append(", \n");
         return newString.toString();
-    }
-
-    public static void main(String[] args) {
-        UserDataService userService = new UserDataService();
-        UserInfo newUser = new Staff("Alice", 30, "Manager");
-        userService.add(newUser);
-        userService.add(new Staff("Bob", 25, "Developer"));
-        userService.add(new Student("Charlie", 20, "Computer Science", 2));
-        userService.add(new Student("David", 22, "Mathematics", 5));
-        System.out.println(userService);
-        userService.update(
-            2,
-            studnet -> {
-                Student s = (Student) studnet;
-                s.setAge(21);
-                s.setName("Charliesss");
-                s.setProgram("Software Engineering");
-            }
-         );
-        System.out.println(userService);
-
     }
 }

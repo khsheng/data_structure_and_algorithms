@@ -3,10 +3,10 @@ package data_management.entity;
 public abstract class UserInfo {
     private static int counter = 1;
 
-    private int id;
-    private String name;
-    private int age;
-    private String role;
+    protected  int id;
+    protected String name;
+    protected int age;
+    protected String role;
 
     public UserInfo(String name, int age, String role) {
         this.id = counter;
@@ -40,8 +40,9 @@ public abstract class UserInfo {
         this.age = age;
     }
 
-    public static void main(String[] args) {
-        System.out.println("abc");
+    @Override
+    public String toString() {
+        return String.format("ID: %d, Name: %s, Age: %d, Role: %s", this.id, this.name, this.age, this.role);
     }
 }
 

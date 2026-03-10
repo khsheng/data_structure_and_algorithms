@@ -16,7 +16,9 @@ public class Staff extends UserInfo {
         this.position = position;
     }
 
-    public static void main(String[] args) {
-        System.out.println("abc");
+    @Override
+    public String toString() {
+        return String.format("ID: %d, Name: %s, Age: %d, Position: %s", this.id, this.name, this.age, this.position);
     }
+
 }

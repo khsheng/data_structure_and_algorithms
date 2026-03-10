@@ -183,24 +183,9 @@ public class ListADT<T> implements InterfaceADT<T>{
     private void inBoundsValidation(int index, String process){
         if ((index >= numberOfElement) || (index < 0)) {
             throw new IndexOutOfBoundsException(
-                "Index '" + index + "' not exist and invalide for" + process
+                "Index '" + index + "' not exist and invalide for " + process
             );
         }
-    }
-
-
-
-    public static void main(String[] args) {
-        ListADT<Integer> list = new ListADT<>();
-
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        System.out.println("Original list: " + list.toString());
-        list.sort((a,b) -> b - a);
-        System.out.println("Sorted list: " + list.toString());
-
-        System.out.println("Indices of element 2: " + list.findAll(a -> a == 2));
     }
 }
 
