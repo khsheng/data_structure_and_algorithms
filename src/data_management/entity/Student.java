@@ -1,26 +1,24 @@
 package data_management.entity;
 
+import ADT.ListADT;
+
 public class Student extends UserInfo {
     private String program;
-    private int borrowedBooks;
+    private ListADT<Book> borrowedBooks;
     private static final int MAXBORROWS = 5;
 
-    public Student(String name, int age, String program, int borrowedBooks) {
+    public Student(String name, int age, String program) {
         super(name, age, "student");
         this.program = program;
-        this.borrowedBooks = borrowedBooks;
+        this.borrowedBooks = new ListADT<>();
     }
 
     public String getProgram() {
         return this.program;
     }
 
-    public int getBorrowedBooks() {
+    public ListADT<Book> getBorrowedBooks() {
         return this.borrowedBooks;
-    }
-
-    public void setBorrowedBooks(int borrowedBooks) {
-        this.borrowedBooks = borrowedBooks;
     }
 
     public void setProgram(String program) {
@@ -28,10 +26,19 @@ public class Student extends UserInfo {
     }
 
     public boolean canBorrow() {
-        return borrowedBooks < MAXBORROWS;
+        return borrowedBooks.len() < MAXBORROWS;
     }
 
-    public static void main(String[] args) {
-        System.out.println("abc");
+    public int getRemainingBorrowLimit() {
+        return MAXBORROWS - borrowedBooks.len();
+    }
+
+    public void addBorrowedBooks(Book borrowBook) {
+        this.borrowedBooks.add(borrowBook);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("ID: %d, Name: %s, Age: %d, Program: %s, Borrowed Books: %d", this.id, this.name, this.age, this.program, this.borrowedBooks.len());
     }
 }

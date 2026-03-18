@@ -1,7 +1,8 @@
 package data_management.service;
 
 import ADT.ListADT;
-import java.util.function.Predicate;
+import java.util.function.*;;
+
 
 /**
  *
@@ -27,24 +28,14 @@ public interface CrudService<T> {
      */
     public void remove(int index);
 
-    /**
-     * Task: Replace (update) a record for Staff only
-     * @param index the integer that specifies the position to replace the record
-     * @param name the updated name
-     * @param age the updated age
-     * @param position the updated position
-     */
-    public void update(int index, String name, int age, String position);
 
     /**
-     * Task: Replace (update) a record for Student only
+     * Task: Replace (update) a record at a specified position
      * @param index the integer that specifies the position to replace the record
-     * @param name the updated name
-     * @param age the updated age
-     * @param program the updated program
-     * @param borrowedBooks the updated number of borrowed books
+     * @param set the condition to update the record
      */
-    public void update(int index, String name, int age, String program, int borrowedBooks);
+    public void update(int index, Consumer<T> set);
+
 
     /**
      * Task: Search for records that match the specified criteria
