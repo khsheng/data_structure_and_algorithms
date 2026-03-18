@@ -7,6 +7,7 @@ public abstract class UserInfo {
     protected String name;
     protected int age;
     protected String role;
+    protected boolean isBlacklisted = false;
 
     public UserInfo(String name, int age, String role) {
         this.id = counter;
