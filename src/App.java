@@ -1,4 +1,5 @@
 
+import Transaction.TransactionMenu;
 import data_management.entity.Book;
 import data_management.entity.Staff;
 import data_management.entity.Student;
@@ -11,7 +12,14 @@ import java.time.LocalDate;
 
 public class App {
     public static void main(String[] args) throws Exception {
+        lipwaiTesting();
+        
         khsTesting();
+    }
+
+    public static void lipwaiTesting(){
+        TransactionMenu menu = new TransactionMenu();
+        menu.start();
     }
 
     public static void khsTesting(){
