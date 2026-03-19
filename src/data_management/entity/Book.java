@@ -133,6 +133,7 @@ public class Book {
             this.borrowedDate = borrowedDate;
         } else {
             System.out.println("Incorrect password.");
+            throw new SecurityException("Unauthorized access to set borrowed date.");
         }
     }
 
