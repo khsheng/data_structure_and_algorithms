@@ -2,6 +2,7 @@ package data_management.service;
 
 import ADT.ListADT;
 import data_management.entity.*;
+import java.time.LocalDate;
 
 public class BorrowBook {
     public boolean borrowBook(int bookID, int studentID) {
@@ -29,6 +30,8 @@ public class BorrowBook {
             bookToBorrow.setBorrowedDate();
 
             borrowingStudent.addBorrowedBooks(bookToBorrow);
+
+            HistoryRecorder.recordBookAction(bookID, studentID, BookHistory.TransactionType.BORROW, LocalDate.now());
             return true;
         }
         return false;
@@ -58,13 +61,22 @@ public class BorrowBook {
             throw new IllegalArgumentException("Book does not have a penalty fee for the student.");
         }
 
+        ListADT<Double> penaltyFees = calPenaltyFee(bookID, isBroken);
+        double lateOfReturnPenalty = penaltyFees.get(0);
+        double brokenBookPenalty = penaltyFees.get(1);
 
-        double change = calChange(amount, calPenaltyFee(bookID, isBroken));
+        double change = calChange(amount, lateOfReturnPenalty + brokenBookPenalty);
 
         if (change < 0) {
             return -1;
         }
 
+        // Payment successful, mark the penalty as paid
+        HistoryRecorder.recordPenalty("Late Return", lateOfReturnPenalty, LocalDate.now());
+        if (isBroken) {
+            HistoryRecorder.recordPenalty("Broken Book", brokenBookPenalty, LocalDate.now());
+        }
+        
         books.get(0).setIsPenaltyPayed(true);
         return change;
     }
@@ -77,7 +89,7 @@ public class BorrowBook {
         return amountPayed - PenaltyFee;
     }
 
-    public double calPenaltyFee(int bookID, boolean isBroken) {
+    public ListADT<Double> calPenaltyFee(int bookID, boolean isBroken) {
         BookDataService bookDataService = new BookDataService();
         ListADT<Book> books = bookDataService.search(book -> book.getId() == bookID);
         
@@ -85,7 +97,11 @@ public class BorrowBook {
             throw new IllegalArgumentException("Book with the specified ID does not exist.");
         }
 
-        return books.get(0).getPenaltyFee() + (isBroken ? books.get(0).getPrice() : 0);
+        ListADT<Double> penaltyFees = new ListADT<>();
+        penaltyFees.add(books.get(0).getPenaltyFee());
+        penaltyFees.add(isBroken ? books.get(0).getPrice() : 0);
+
+        return penaltyFees;
     }
 
 
@@ -123,6 +139,8 @@ public class BorrowBook {
 
             int indexToRemove = returningStudent.getBorrowedBooks().findAll(book -> book.getId() == bookID).get(0);
             returningStudent.getBorrowedBooks().remove(indexToRemove);
+
+            HistoryRecorder.recordBookAction(bookID, studentID, BookHistory.TransactionType.RETURN, LocalDate.now());
 
             return true;
         }
