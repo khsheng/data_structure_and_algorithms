@@ -16,6 +16,7 @@ public class Book {
     private LocalDate borrowedDate = null;
     private Student personInBorrowed = null;
     private boolean isPenaltyPayed = false;
+    private boolean isBroken = false;
 
     private static final int BORROW_DURATION_DAYS = 7;
 
@@ -26,7 +27,6 @@ public class Book {
         this.category = category;
         this.price = price;
         this.isBorrowed = false;
-
     }
 
     public int getId() {
@@ -47,6 +47,10 @@ public class Book {
 
     public boolean isBorrowed() {
         return this.isBorrowed;
+    }
+
+    public boolean isBorken() {
+        return this.isBroken;
     }
 
     public Student getPersonInBorrowed() {
@@ -70,6 +74,7 @@ public class Book {
 
     public double getPenaltyFee() {
         if (this.borrowedDate == null) {
+            System.out.println("This book has not been borrow, cannot calculate Penalty Fees.");
             return 0.0;
         }
 
@@ -110,6 +115,10 @@ public class Book {
         this.isBorrowed = borrowed;
     }
 
+    public void setBroken(boolean isbroken) {
+        this.isBroken = this.isBroken && isBroken;
+    }
+
     public void setPersonInBorrowed(Student personInBorrowed) {
         this.personInBorrowed = personInBorrowed;
     }
@@ -123,7 +132,7 @@ public class Book {
     }
 
     public void setBorrowedDate(LocalDate borrowedDate) {
-        String password = "password123";
+        String password = "khs";
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter password to set borrowed date:");
