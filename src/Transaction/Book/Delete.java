@@ -2,6 +2,7 @@ package Transaction.Book;
 
 import data_management.entity.Book;
 import data_management.service.BookDataService;
+import data_management.service.BookListPagination;
 import ADT.ListADT;
 import java.util.Scanner;
 
@@ -9,12 +10,15 @@ public class Delete {
     private final Scanner scanner;
     private static final BookDataService bookDataService = new BookDataService();
 
+    private BookListPagination paginationDisplay;
+
     public Delete() {
         this(new Scanner(System.in));
     }
 
     public Delete(Scanner scanner) {
         this.scanner = scanner;
+        this.paginationDisplay = new BookListPagination(scanner);
     }
 
     /**
@@ -91,26 +95,6 @@ public class Delete {
 
     private void displayAllBooks() {
         ListADT<Book> allBooks = bookDataService.search(book -> true);
-        
-        if (allBooks.len() == 0) {
-            System.out.println("No books available in the system.");
-            return;
-        }
-        
-        System.out.println("\nAvailable Books:");
-        System.out.println("-----------------------------------------------------------------------------------");
-        System.out.printf("%-5s | %-25s | %-20s | %-15s | %-10s%n", 
-                "ID", "Title", "Author", "Category", "Price");
-        System.out.println("-----------------------------------------------------------------------------------");
-        for (int i = 0; i < allBooks.len(); i++) {
-            Book book = allBooks.get(i);
-            System.out.printf("%-5d | %-25s | %-20s | %-15s | RM%-8.2f%n",
-                    book.getId(), 
-                    book.getTitle().length() > 25 ? book.getTitle().substring(0, 22) + "..." : book.getTitle(),
-                    book.getAuthor().length() > 20 ? book.getAuthor().substring(0, 17) + "..." : book.getAuthor(),
-                    book.getCategory().length() > 15 ? book.getCategory().substring(0, 12) + "..." : book.getCategory(),
-                    book.getPrice());
-        }
-        System.out.println("-----------------------------------------------------------------------------------");
+        paginationDisplay.displayBooksWithPagination(allBooks);
     }
 }

@@ -3,6 +3,8 @@ package Transaction;
 import Transaction.Book.Register;
 import Transaction.Book.Update;
 import Transaction.Book.Delete;
+import Transaction.Borrow.Borrow;
+import Transaction.Return.Return;
 import java.util.Scanner;
 
 
@@ -11,6 +13,8 @@ public class TransactionMenu {
     private final Register register;
     private final Update update;
     private final Delete delete;
+    private final Borrow borrow;
+    private final Return returnTransaction;
 
     public TransactionMenu() {
         this(new Scanner(System.in));
@@ -21,6 +25,8 @@ public class TransactionMenu {
         this.register = new Register(scanner);
         this.update = new Update(scanner);
         this.delete = new Delete(scanner);
+        this.borrow = new Borrow(scanner);
+        this.returnTransaction = new Return(scanner);
     }
 
     public void start() {
@@ -31,6 +37,12 @@ public class TransactionMenu {
             switch (choice) {
                 case "1":
                     showBookMenu();
+                    break;
+                case "2":
+                    showBorrowMenu();
+                    break;
+                case "3":
+                    showReturnMenu();
                     break;
                 case "0":
                     running = false;
@@ -45,6 +57,8 @@ public class TransactionMenu {
     private void printMenu() {
         System.out.println("\n=== Transaction Menu ===");
         System.out.println("1. Book Menu");
+        System.out.println("2. Borrow Menu");
+        System.out.println("3. Return Menu");
         System.out.println("0. Exit");
         System.out.print("Select an option: ");
     }
@@ -86,5 +100,90 @@ public class TransactionMenu {
         System.out.print("Select an option: ");
     }
 
+    private void showBorrowMenu() {
+        boolean inBorrowMenu = true;
+        while (inBorrowMenu) {
+            printBorrowMenu();
+            String choice = scanner.nextLine().trim();
+            switch (choice) {
+                case "1":
+                    borrowBook();
+                    break;
+                case "0":
+                    inBorrowMenu = false;
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    private void printBorrowMenu() {
+        System.out.println("\n--- Borrow Menu ---");
+        System.out.println("1. Borrow Book");
+        System.out.println("0. Back to Main Menu");
+        System.out.print("Select an option: ");
+    }
+
+    private void borrowBook() {
+        System.out.print("Enter Book ID: ");
+        int bookID = getIntInput();
+        
+        System.out.print("Enter Student ID: ");
+        int studentID = getIntInput();
+        
+        Borrow.BorrowResult result = borrow.borrowBook(bookID, studentID);
+        
+        if (result.isSuccess()) {
+            System.out.println("\n✓ " + result.getMessage());
+        } else {
+            System.out.println("\n✗ " + result.getMessage());
+        }
+    }
+
+    private void showReturnMenu() {
+        boolean inReturnMenu = true;
+        while (inReturnMenu) {
+            printReturnMenu();
+            String choice = scanner.nextLine().trim();
+            switch (choice) {
+                case "1":
+                    returnBook();
+                    break;
+                case "0":
+                    inReturnMenu = false;
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    private void printReturnMenu() {
+        System.out.println("\n--- Return Menu ---");
+        System.out.println("1. Return Book");
+        System.out.println("0. Back to Main Menu");
+        System.out.print("Select an option: ");
+    }
+
+    private void returnBook() {
+        Return.ReturnResult result = returnTransaction.returnBookInteractive();
+        
+        if (result.isSuccess()) {
+            System.out.println("\n✓ " + result.getMessage());
+        } else {
+            System.out.println("\n✗ " + result.getMessage());
+        }
+    }
+
+    private int getIntInput() {
+        while (true) {
+            try {
+                return Integer.parseInt(scanner.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.print("Invalid input. Please enter a number: ");
+            }
+        }
+    }
 
 }

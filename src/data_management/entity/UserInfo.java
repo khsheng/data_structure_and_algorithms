@@ -41,6 +41,14 @@ public abstract class UserInfo {
         this.age = age;
     }
 
+    public boolean isBlacklisted() {
+        return this.isBlacklisted;
+    }
+
+    public void setBlacklisted(boolean blacklisted) {
+        this.isBlacklisted = blacklisted;
+    }
+
     @Override
     public String toString() {
         return String.format("ID: %d, Name: %s, Age: %d, Role: %s", this.id, this.name, this.age, this.role);
