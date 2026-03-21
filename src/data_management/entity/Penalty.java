@@ -30,4 +30,9 @@ public class Penalty {
         return String.format("Penalty Type: %s, Amount: %.2f, Date: %s", penalty_type, amount, date);
     }
 
+    public static void main(String[] args) {
+        Penalty penalty1 = new Penalty("Late Return", 5.0, LocalDate.now());
+        System.out.println(penalty1);
+    }
+
 }
