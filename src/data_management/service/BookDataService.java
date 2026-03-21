@@ -5,8 +5,8 @@ import data_management.entity.*;
 
 import java.util.Comparator;
 import java.util.function.*;
-
 import util.BookDisplay;
+import util.DisplayTableAction;
 import util.Testing;
 
 public class BookDataService implements CrudService<Book> {
@@ -77,102 +77,6 @@ public class BookDataService implements CrudService<Book> {
         return availableBooks;
     }
 
-    public void displayTable() {
-        ListADT<Book> copyBookList = bookList.copy();
-
-        int pageSize = 5;
-        if (copyBookList.len() == 0) {
-            System.out.println("No books available.");
-            return;
-        }
-
-        int currentPage = 1;
-
-        while (true) {
-            int totalRecords = copyBookList.len();
-            int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
-            int startIndex = (currentPage - 1) * pageSize;
-            int endIndex = Math.min(startIndex + pageSize, totalRecords);
-            BookDisplay bookDisplay = new BookDisplay(currentPage, totalPages);
-            String input;
-
-            tableLayout(startIndex, endIndex, copyBookList);
-
-            // Call action and update currentPage
-            input = bookDisplay.tableActionMenu();
-
-            switch (input) {
-                case "1":
-                    currentPage = bookDisplay.nextPage();
-                    break;
-
-                case "2":
-                    currentPage = bookDisplay.previousPage();
-                    break;
-
-                case "3":
-                    String sortBy = bookDisplay.AttributeMenu();
-                    Boolean ascending = bookDisplay.byAscending();
-
-                    Comparator comparator = bookDisplay.getComparatorByOption(sortBy, ascending);
-                    copyBookList = sort(comparator);
-                    break;
-
-                case "4":
-                    String searchBy = bookDisplay.AttributeMenu();
-                    Predicate<Book> predicate = bookDisplay.getPredicateByOption(searchBy);
-
-                    copyBookList = search(predicate);
-                    break;
-
-                default:
-                    return;
-            } 
-
-            System.out.println();
-        }
-    }
-
-    public void tableLayout(int startIndex, int endIndex, ListADT<Book> copyBookList) {
-        // Table header
-        System.out.printf("%-5s %-25s %-20s %-15s %-10s %-10s %-15s %-15s %-15s %-10s%n",
-                "ID", "Title", "Author", "Category", "Price", "Borrowed",
-                "Borrowed By", "Borrowed Date", "Penalty Paid", "Broken");
-
-        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------");
-
-        // Table rows for this page
-        for (int i = startIndex; i < endIndex; i++) {
-            Book book = copyBookList.get(i);
-
-            String borrower = book.isBorrowed() && book.getPersonInBorrowed() != null
-                    ? book.getPersonInBorrowed().getName()
-                    : "-";
-
-            String borrowedDate = book.getBorrowedDate() != null ? book.getBorrowedDate().toString() : "-";
-
-            String penaltyPaidMessage;
-            if (book.getPenaltyFee() == 0.0) {
-                penaltyPaidMessage = "-";
-            } else {
-                penaltyPaidMessage = book.isPenaltyPayed() ? "Yes" : "No";
-            }
-
-            System.out.printf("%-5d %-25s %-20s %-15s RM%-9.2f %-10s %-15s %-15s %-15s %-10s%n",
-                    book.getId(),
-                    book.getTitle(),
-                    book.getAuthor(),
-                    book.getCategory(),
-                    book.getPrice(),
-                    book.isBorrowed() ? "Yes" : "No",
-                    borrower,
-                    borrowedDate,
-                    penaltyPaidMessage,
-                    book.isBorken() ? "Yes" : "No");
-        }
-    }
-
-
     @Override
     public String toString() {
         if (bookList.len() == 0) return "[]";
@@ -208,6 +112,9 @@ public class BookDataService implements CrudService<Book> {
         UserDataService userDataService = new UserDataService();
         Testing.addTestUsers(userDataService);
 
-        bookDataService.displayTable();
+        DisplayTableAction<Book> displayTable = new BookDisplay(bookDataService.search(b -> true));
+        displayTable.displayTable();
+
+
     }
 }

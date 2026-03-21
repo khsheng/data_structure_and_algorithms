@@ -1,15 +1,17 @@
 package util;
 
+import ADT.ListADT;
+import data_management.entity.Book;
+import data_management.service.BookDataService;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.function.*;
 
-import data_management.entity.Book;
+public class BookDisplay extends DisplayTableAction<Book>{
+    BookDataService dataService = new BookDataService();
 
-public class BookDisplay extends DisplayTableAction{
-
-    public BookDisplay(int currentPage, int totalPages) {
-        super(currentPage, totalPages);
+    public BookDisplay(ListADT<Book> displayList) {
+        super(displayList);
     }
 
     // Sort
@@ -141,5 +143,55 @@ public class BookDisplay extends DisplayTableAction{
                 System.out.println("Invalid option.");
                 return book -> false; // no matches
         }
+    }
+
+    @Override
+    public void tableLayout(int startIndex, int endIndex, ListADT<Book> copyBookList) {
+        // Table header
+        System.out.printf("%-5s %-25s %-20s %-15s %-10s %-10s %-15s %-15s %-15s %-10s%n",
+                "ID", "Title", "Author", "Category", "Price", "Borrowed",
+                "Borrowed By", "Borrowed Date", "Penalty Paid", "Broken");
+
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------");
+
+        // Table rows for this page
+        for (int i = startIndex; i < endIndex; i++) {
+            Book book = copyBookList.get(i);
+
+            String borrower = book.isBorrowed() && book.getPersonInBorrowed() != null
+                    ? book.getPersonInBorrowed().getName()
+                    : "-";
+
+            String borrowedDate = book.getBorrowedDate() != null ? book.getBorrowedDate().toString() : "-";
+
+            String penaltyPaidMessage;
+            if (book.getPenaltyFee() == 0.0) {
+                penaltyPaidMessage = "-";
+            } else {
+                penaltyPaidMessage = book.isPenaltyPayed() ? "Yes" : "No";
+            }
+
+            System.out.printf("%-5d %-25s %-20s %-15s RM%-9.2f %-10s %-15s %-15s %-15s %-10s%n",
+                    book.getId(),
+                    book.getTitle(),
+                    book.getAuthor(),
+                    book.getCategory(),
+                    book.getPrice(),
+                    book.isBorrowed() ? "Yes" : "No",
+                    borrower,
+                    borrowedDate,
+                    penaltyPaidMessage,
+                    book.isBorken() ? "Yes" : "No");
+        }
+    }
+
+    @Override
+    public ListADT<Book> sort (Comparator<Book> comparator){
+        return dataService.sort(comparator);
+    }
+    
+    @Override
+    public ListADT<Book> search (Predicate<Book> parameter){
+        return dataService.search(parameter);
     }
 }
