@@ -21,6 +21,12 @@ public interface InterfaceADT<T> {
      * @param element the object to be added as a new element
      */
     public void add(int index, T element);
+
+    /**
+     * 
+     * @return a list 
+     */
+    public ListADT<T> copy();
     
     /**
      * Task: Removes the element at a specified position
@@ -74,7 +80,13 @@ public interface InterfaceADT<T> {
      */
     public ListADT<Integer> findAll(T element);
     
+    /**
+     * Task: Find all the index of the element that match with the given element 
+     * @param condition the condition to search for
+     * @return a list of index of the matching element or an empty list for no match is found
+     */
     public ListADT<Integer> findAll(Predicate<T> condition);
+
     /**
      * Task: Gets the number of element in the list
      * @return the integer number of the element currently in the list

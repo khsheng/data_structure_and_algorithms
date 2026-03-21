@@ -1,12 +1,15 @@
 package data_management.entity;
 
+import java.time.LocalDate;
+
 public abstract class UserInfo {
     private static int counter = 1;
 
-    protected  int id;
+    protected int id;
     protected String name;
     protected int age;
     protected String role;
+    protected LocalDate registerationData;
     protected boolean isBlacklisted = false;
 
     public UserInfo(String name, int age, String role) {
@@ -14,6 +17,7 @@ public abstract class UserInfo {
         this.name = name;
         this.age = age;
         this.role = role;
+        this.registerationData = LocalDate.now();
         counter++;
     }
 
@@ -31,6 +35,10 @@ public abstract class UserInfo {
 
     public String getRole() {
         return this.role;
+    }
+
+    public LocalDate getRegisterationData(){
+        return this.registerationData;
     }
 
     public void setName(String name) {
