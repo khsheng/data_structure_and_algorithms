@@ -1,12 +1,11 @@
 package util;
 
+import ADT.ListADT;
 import java.util.Comparator;
 import java.util.Scanner;
 import java.util.function.*;
 
-import data_management.entity.Book;
-
-public abstract class DisplayTableAction {
+public abstract class DisplayTableAction<T> {
     int currentPage;
     int totalPages;
     Scanner scanner = new Scanner(System.in);
@@ -65,7 +64,9 @@ public abstract class DisplayTableAction {
 
     public abstract String AttributeMenu();
 
-    public abstract Comparator<Book> getComparatorByOption(String option, boolean ascending);
+    public abstract Comparator<T> getComparatorByOption(String option, boolean ascending);
 
-    public abstract Predicate<Book> getPredicateByOption(String option);
+    public abstract Predicate<T> getPredicateByOption(String option);
+
+    public abstract void tableLayout(int startIndex, int endIndex, ListADT<T> displayList);
 }

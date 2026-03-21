@@ -4,7 +4,6 @@ import ADT.ListADT;
 import data_management.entity.*;
 import java.util.Comparator;
 import java.util.function.*;
-
 import util.BookDisplay;
 import util.Testing;
 
@@ -95,7 +94,7 @@ public class BookDataService implements CrudService<Book> {
             BookDisplay bookDisplay = new BookDisplay(currentPage, totalPages);
             String input;
 
-            tableLayout(startIndex, endIndex, copyBookList);
+            bookDisplay.tableLayout(startIndex, endIndex, copyBookList);
 
             // Call action and update currentPage
             input = bookDisplay.tableActionMenu();
@@ -129,45 +128,6 @@ public class BookDataService implements CrudService<Book> {
             } 
 
             System.out.println();
-        }
-    }
-
-    public void tableLayout(int startIndex, int endIndex, ListADT<Book> copyBookList) {
-        // Table header
-        System.out.printf("%-5s %-25s %-20s %-15s %-10s %-10s %-15s %-15s %-15s %-10s%n",
-                "ID", "Title", "Author", "Category", "Price", "Borrowed",
-                "Borrowed By", "Borrowed Date", "Penalty Paid", "Broken");
-
-        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------");
-
-        // Table rows for this page
-        for (int i = startIndex; i < endIndex; i++) {
-            Book book = copyBookList.get(i);
-
-            String borrower = book.isBorrowed() && book.getPersonInBorrowed() != null
-                    ? book.getPersonInBorrowed().getName()
-                    : "-";
-
-            String borrowedDate = book.getBorrowedDate() != null ? book.getBorrowedDate().toString() : "-";
-
-            String penaltyPaidMessage;
-            if (book.getPenaltyFee() == 0.0) {
-                penaltyPaidMessage = "-";
-            } else {
-                penaltyPaidMessage = book.isPenaltyPayed() ? "Yes" : "No";
-            }
-
-            System.out.printf("%-5d %-25s %-20s %-15s RM%-9.2f %-10s %-15s %-15s %-15s %-10s%n",
-                    book.getId(),
-                    book.getTitle(),
-                    book.getAuthor(),
-                    book.getCategory(),
-                    book.getPrice(),
-                    book.isBorrowed() ? "Yes" : "No",
-                    borrower,
-                    borrowedDate,
-                    penaltyPaidMessage,
-                    book.isBorken() ? "Yes" : "No");
         }
     }
 
