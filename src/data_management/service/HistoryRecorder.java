@@ -1,8 +1,8 @@
 package data_management.service;
 
 import ADT.ListADT;
-import data_management.entity.BookHistory;
-import data_management.entity.Penalty;
+import data_management.entity.*;
+// import data_management.entity.Penalty;
 import java.time.LocalDate;
 
 public class HistoryRecorder {
@@ -27,5 +27,17 @@ public class HistoryRecorder {
 
     public static ListADT<BookHistory> getAllBookHistories() {
         return bookHistoryList;
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        recordPenalty("Late Return", 5.0, LocalDate.now());
+        recordBookAction(1, 101, BookHistory.TransactionType.BORROW, LocalDate.now());
+
+        System.out.println("All penalties recorded:");
+        System.out.println(getAllPenalties());
+
+        System.out.println("All book histories recorded:");
+        System.out.println(getAllBookHistories());
     }
 }
