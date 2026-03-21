@@ -4,13 +4,15 @@ import ADT.ListADT;
 import data_management.entity.Staff;
 import data_management.entity.Student;
 import data_management.entity.UserInfo;
+import data_management.service.UserDataService;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
 public class UserDisplay extends DisplayTableAction<UserInfo> {
+    UserDataService dataService = new UserDataService();
 
-    public UserDisplay(int currentPage, int totalPages) {
-        super(currentPage, totalPages);
+    public UserDisplay(ListADT<UserInfo> displayList) {
+        super(displayList);
     }
 
     @Override
@@ -130,5 +132,15 @@ public class UserDisplay extends DisplayTableAction<UserInfo> {
                     blacklisted,
                     remark);
         }
+    }
+
+    @Override
+    public ListADT<UserInfo> sort (Comparator<UserInfo> comparator){
+        return dataService.sort(comparator);
+    }
+    
+    @Override
+    public ListADT<UserInfo> search (Predicate<UserInfo> parameter){
+        return dataService.search(parameter);
     }
 }

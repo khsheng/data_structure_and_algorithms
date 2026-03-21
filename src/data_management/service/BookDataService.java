@@ -5,6 +5,7 @@ import data_management.entity.*;
 import java.util.Comparator;
 import java.util.function.*;
 import util.BookDisplay;
+import util.DisplayTableAction;
 import util.Testing;
 
 public class BookDataService implements CrudService<Book> {
@@ -75,63 +76,6 @@ public class BookDataService implements CrudService<Book> {
         return availableBooks;
     }
 
-    public void displayTable() {
-        ListADT<Book> copyBookList = bookList.copy();
-
-        int pageSize = 5;
-        if (copyBookList.len() == 0) {
-            System.out.println("No books available.");
-            return;
-        }
-
-        int currentPage = 1;
-
-        while (true) {
-            int totalRecords = copyBookList.len();
-            int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
-            int startIndex = (currentPage - 1) * pageSize;
-            int endIndex = Math.min(startIndex + pageSize, totalRecords);
-            BookDisplay bookDisplay = new BookDisplay(currentPage, totalPages);
-            String input;
-
-            bookDisplay.tableLayout(startIndex, endIndex, copyBookList);
-
-            // Call action and update currentPage
-            input = bookDisplay.tableActionMenu();
-
-            switch (input) {
-                case "1":
-                    currentPage = bookDisplay.nextPage();
-                    break;
-
-                case "2":
-                    currentPage = bookDisplay.previousPage();
-                    break;
-
-                case "3":
-                    String sortBy = bookDisplay.AttributeMenu();
-                    Boolean ascending = bookDisplay.byAscending();
-
-                    Comparator comparator = bookDisplay.getComparatorByOption(sortBy, ascending);
-                    copyBookList = sort(comparator);
-                    break;
-
-                case "4":
-                    String searchBy = bookDisplay.AttributeMenu();
-                    Predicate<Book> predicate = bookDisplay.getPredicateByOption(searchBy);
-
-                    copyBookList = search(predicate);
-                    break;
-
-                default:
-                    return;
-            } 
-
-            System.out.println();
-        }
-    }
-
-
     @Override
     public String toString() {
         if (bookList.len() == 0) return "[]";
@@ -167,6 +111,9 @@ public class BookDataService implements CrudService<Book> {
         UserDataService userDataService = new UserDataService();
         Testing.addTestUsers(userDataService);
 
-        bookDataService.displayTable();
+        DisplayTableAction<Book> displayTable = new BookDisplay(bookDataService.search(b -> true));
+        displayTable.displayTable();
+
+
     }
 }

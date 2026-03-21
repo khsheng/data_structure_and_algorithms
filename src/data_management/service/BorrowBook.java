@@ -196,6 +196,5 @@ public class BorrowBook {
         ListADT<Double> panaltyFees = borrowBook.calPenaltyFee(1, true);
         System.out.println("Panalty that have to pay: " + (panaltyFees.get(0) + panaltyFees.get(1)));
 
-        bookDataService.displayTable();
     }
 }

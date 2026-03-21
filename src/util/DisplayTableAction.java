@@ -6,13 +6,64 @@ import java.util.Scanner;
 import java.util.function.*;
 
 public abstract class DisplayTableAction<T> {
-    int currentPage;
+    int currentPage = 1;
     int totalPages;
+    ListADT<T> displayList;
     Scanner scanner = new Scanner(System.in);
 
-    public DisplayTableAction(int currentPage, int totalPages){
-        this.currentPage = currentPage;
-        this.totalPages = totalPages;
+    public DisplayTableAction(ListADT<T> list){
+        displayList = list.copy();
+    }
+
+    public void displayTable() {
+        int pageSize = 5;
+        if (displayList.len() == 0) {
+            System.out.println("No books available.");
+            return;
+        }
+
+        while (true) {
+            int totalRecords = displayList.len();
+            totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+            int startIndex = (currentPage - 1) * pageSize;
+            int endIndex = Math.min(startIndex + pageSize, totalRecords);
+            String input;
+
+            tableLayout(startIndex, endIndex, displayList);
+
+            // Call action and update currentPage
+            input = tableActionMenu();
+
+            switch (input) {
+                case "1":
+                    currentPage = nextPage();
+                    break;
+
+                case "2":
+                    currentPage = previousPage();
+                    break;
+
+                case "3":
+                    String sortBy = AttributeMenu();
+                    Boolean ascending = byAscending();
+
+                    Comparator comparator = getComparatorByOption(sortBy, ascending);
+                    displayList = sort(comparator);
+                    break;
+
+                case "4":
+                    String searchBy = AttributeMenu();
+                    Predicate<T> predicate = getPredicateByOption(searchBy);
+
+                    displayList = search(predicate);
+                    break;
+
+                default:
+                    return;
+            } 
+
+            System.out.println();
+        }
     }
 
     public String tableActionMenu(){
@@ -69,4 +120,8 @@ public abstract class DisplayTableAction<T> {
     public abstract Predicate<T> getPredicateByOption(String option);
 
     public abstract void tableLayout(int startIndex, int endIndex, ListADT<T> displayList);
+
+    public abstract ListADT<T> sort (Comparator<T> comparator);
+
+    public abstract ListADT<T> search (Predicate<T> parameter);
 }

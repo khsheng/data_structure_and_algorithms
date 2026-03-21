@@ -4,6 +4,7 @@ import ADT.ListADT;
 import data_management.entity.*;
 import java.util.Comparator;
 import java.util.function.*;
+import util.DisplayTableAction;
 import util.Testing;
 import util.UserDisplay;
 
@@ -52,62 +53,6 @@ public class UserDataService implements CrudService<UserInfo>{
     public ListADT<UserInfo> sort(Comparator<UserInfo> comparator) {
         userList.sort(comparator);
         return userList;
-    }
-
-    public void displayTable() {
-        ListADT<UserInfo> copyUserList = userList.copy();
-
-        int pageSize = 5;
-        if (copyUserList.len() == 0) {
-            System.out.println("No books available.");
-            return;
-        }
-
-        int currentPage = 1;
-
-        while (true) {
-            int totalRecords = copyUserList.len();
-            int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
-            int startIndex = (currentPage - 1) * pageSize;
-            int endIndex = Math.min(startIndex + pageSize, totalRecords);
-            UserDisplay userDisplay = new UserDisplay(currentPage, totalPages);
-            String input;
-
-            userDisplay.tableLayout(startIndex, endIndex, copyUserList);
-
-            // Call action and update currentPage
-            input = userDisplay.tableActionMenu();
-
-            switch (input) {
-                case "1":
-                    currentPage = userDisplay.nextPage();
-                    break;
-
-                case "2":
-                    currentPage = userDisplay.previousPage();
-                    break;
-
-                case "3":
-                    String sortBy = userDisplay.AttributeMenu();
-                    Boolean ascending = userDisplay.byAscending();
-
-                    Comparator comparator = userDisplay.getComparatorByOption(sortBy, ascending);
-                    copyUserList = sort(comparator);
-                    break;
-
-                case "4":
-                    String searchBy = userDisplay.AttributeMenu();
-                    Predicate<UserInfo> predicate = userDisplay.getPredicateByOption(searchBy);
-
-                    copyUserList = search(predicate);
-                    break;
-
-                default:
-                    return;
-            } 
-
-            System.out.println();
-        }
     }
 
     @Override
@@ -166,6 +111,7 @@ public class UserDataService implements CrudService<UserInfo>{
         UserDataService userDataService = new UserDataService();
         Testing.addTestUsers(userDataService);
 
-        userDataService.displayTable();
+        DisplayTableAction<UserInfo> displayTable = new UserDisplay(userDataService.search(b -> true));
+        displayTable.displayTable();
     }
 }

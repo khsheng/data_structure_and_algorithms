@@ -2,13 +2,16 @@ package util;
 
 import ADT.ListADT;
 import data_management.entity.Book;
+import data_management.service.BookDataService;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.function.*;
 
 public class BookDisplay extends DisplayTableAction<Book>{
-    public BookDisplay(int currentPage, int totalPages) {
-        super(currentPage, totalPages);
+    BookDataService dataService = new BookDataService();
+
+    public BookDisplay(ListADT<Book> displayList) {
+        super(displayList);
     }
 
     // Sort
@@ -180,5 +183,15 @@ public class BookDisplay extends DisplayTableAction<Book>{
                     penaltyPaidMessage,
                     book.isBorken() ? "Yes" : "No");
         }
+    }
+
+    @Override
+    public ListADT<Book> sort (Comparator<Book> comparator){
+        return dataService.sort(comparator);
+    }
+    
+    @Override
+    public ListADT<Book> search (Predicate<Book> parameter){
+        return dataService.search(parameter);
     }
 }
