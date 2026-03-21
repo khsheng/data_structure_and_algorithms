@@ -12,9 +12,9 @@ import util.Testing;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        // lipwaiTesting();
+        lipwaiTesting();
         
-        khsTesting();
+        //khsTesting();
     }
 
     public static void lipwaiTesting(){
