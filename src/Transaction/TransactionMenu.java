@@ -5,6 +5,8 @@ import Transaction.Book.Update;
 import Transaction.Book.Delete;
 import Transaction.Borrow.Borrow;
 import Transaction.Return.Return;
+import data_management.service.BookDataService;
+
 import java.util.Scanner;
 
 
@@ -15,6 +17,7 @@ public class TransactionMenu {
     private final Delete delete;
     private final Borrow borrow;
     private final Return returnTransaction;
+    private static final BookDataService bookDataService = new BookDataService();
 
     public TransactionMenu() {
         this(new Scanner(System.in));
@@ -76,7 +79,7 @@ public class TransactionMenu {
                     update.updateBook();
                     break;
                 case "3":
-                    System.out.println("Display overview / selected book selected (feature pending).");
+                    bookDataService.displayTable();
                     break;
                 case "4":
                     delete.deleteBook();

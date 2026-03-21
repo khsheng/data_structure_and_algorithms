@@ -2,8 +2,9 @@ package Transaction.Book;
 
 import data_management.entity.Book;
 import data_management.service.BookDataService;
-import data_management.service.BookListPagination;
 import ADT.ListADT;
+import Transaction.BookListPagination;
+
 import java.util.Scanner;
 
 public class Update {
