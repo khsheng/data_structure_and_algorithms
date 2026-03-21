@@ -5,7 +5,7 @@ import data_management.service.BorrowBook;
 import data_management.service.HistoryRecorder;
 import data_management.service.UserDataService;
 import java.time.LocalDate;
-import utility.Testing;
+import util.Testing;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -50,12 +50,13 @@ public class App {
         System.out.println(bookDataService.search(b -> true).get(0));
         System.out.println(bookDataService.search(b -> true).get(1));
 
-
         System.out.println("All penalties recorded:");
         System.out.println(HistoryRecorder.getAllPenalties());
 
         System.out.println("All book histories recorded:");
         System.out.println(HistoryRecorder.getAllBookHistories());
+
+        bookDataService.displayTable();
     }
 
 

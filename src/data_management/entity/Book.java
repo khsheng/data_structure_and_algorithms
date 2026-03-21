@@ -74,7 +74,6 @@ public class Book {
 
     public double getPenaltyFee() {
         if (this.borrowedDate == null) {
-            System.out.println("This book has not been borrow, cannot calculate Penalty Fees.");
             return 0.0;
         }
 
@@ -115,8 +114,8 @@ public class Book {
         this.isBorrowed = borrowed;
     }
 
-    public void setBroken(boolean isbroken) {
-        this.isBroken = this.isBroken && isBroken;
+    public void setBroken(boolean isBroken) {
+        this.isBroken = isBroken;
     }
 
     public void setPersonInBorrowed(Student personInBorrowed) {

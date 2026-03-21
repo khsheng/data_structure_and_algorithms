@@ -1,4 +1,4 @@
-package utility;
+package util;
 
 import data_management.entity.Book;
 import data_management.entity.Staff;

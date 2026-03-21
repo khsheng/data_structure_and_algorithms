@@ -21,6 +21,12 @@ public interface InterfaceADT<T> {
      * @param element the object to be added as a new element
      */
     public void add(int index, T element);
+
+    /**
+     * 
+     * @return a list 
+     */
+    public ListADT<T> copy();
     
     /**
      * Task: Removes the element at a specified position

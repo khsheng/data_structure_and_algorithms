@@ -3,7 +3,7 @@ package data_management.service;
 import ADT.ListADT;
 import data_management.entity.*;
 import java.time.LocalDate;
-import utility.Testing;
+import util.Testing;
 
 public class BorrowBook {
     public boolean borrowBook(int bookID, int studentID) {
@@ -64,7 +64,7 @@ public class BorrowBook {
         }
 
         Book book = borrowedBooks.get(0);
-        Boolean isNewBroken = book.isBorken() && isBroken;
+        Boolean isNewBroken = book.isBorken() || isBroken;
 
         if (book.getPenaltyFee() < 0 && !isNewBroken) {
             throw new IllegalArgumentException("Book does not have a penalty fee for the student.");
@@ -83,6 +83,8 @@ public class BorrowBook {
         // Payment successful, mark the penalty as paid
         HistoryRecorder.recordPenalty("Late Return", lateOfReturnPenalty, LocalDate.now());
         if (isNewBroken) {
+            book.setBroken(isBroken);
+            System.out.println(book.isBorken());
             HistoryRecorder.recordPenalty("Broken Book", brokenBookPenalty, LocalDate.now());
         }
 
@@ -109,7 +111,7 @@ public class BorrowBook {
 
         // Checking the borken is case by current student or privious student
         Book book = books.get(0);
-        Boolean isNewBroken = book.isBorken() && isBroken;
+        Boolean isNewBroken = book.isBorken() || isBroken;
 
 
         ListADT<Double> penaltyFees = new ListADT<>();
@@ -194,5 +196,6 @@ public class BorrowBook {
         ListADT<Double> panaltyFees = borrowBook.calPenaltyFee(1, true);
         System.out.println("Panalty that have to pay: " + (panaltyFees.get(0) + panaltyFees.get(1)));
 
+        bookDataService.displayTable();
     }
 }

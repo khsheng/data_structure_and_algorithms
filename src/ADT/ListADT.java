@@ -52,6 +52,16 @@ public class ListADT<T> implements InterfaceADT<T>{
     }
 
     @Override
+    public ListADT<T> copy() {
+        ListADT<T> newList = new ListADT<>();
+        for (int i = 0; i < len(); i++) {
+            newList.add(get(i));  // use public get() method
+        }
+        return newList;
+    }
+
+
+    @Override
     public void remove(int index){
         inBoundsValidation(index, "remove");
 
