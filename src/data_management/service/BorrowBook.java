@@ -3,6 +3,7 @@ package data_management.service;
 import ADT.ListADT;
 import data_management.entity.*;
 import java.time.LocalDate;
+import util.Testing;
 
 public class BorrowBook {
     public boolean borrowBook(int bookID, int studentID) {
@@ -24,7 +25,12 @@ public class BorrowBook {
         Book bookToBorrow = books.get(0);
         Student borrowingStudent = (Student) students.get(0);
 
-        if (!bookToBorrow.isBorrowed() && borrowingStudent.canBorrow()) {
+        Boolean canBorrow = borrowingStudent.canBorrow();
+        if (!canBorrow){
+            return false;
+        }
+
+        if (!bookToBorrow.isBorrowed()) {
             bookToBorrow.setBorrowed(true);
             bookToBorrow.setPersonInBorrowed(borrowingStudent);
             bookToBorrow.setBorrowedDate();
@@ -34,6 +40,8 @@ public class BorrowBook {
             HistoryRecorder.recordBookAction(bookID, studentID, BookHistory.TransactionType.BORROW, LocalDate.now());
             return true;
         }
+
+        System.out.println("The book borrowed already.");
         return false;
     }
 
@@ -56,12 +64,13 @@ public class BorrowBook {
         }
 
         Book book = borrowedBooks.get(0);
+        Boolean isNewBroken = book.isBorken() || isBroken;
 
-        if (book.getPenaltyFee() < 0 && !isBroken) {
+        if (book.getPenaltyFee() < 0 && !isNewBroken) {
             throw new IllegalArgumentException("Book does not have a penalty fee for the student.");
         }
 
-        ListADT<Double> penaltyFees = calPenaltyFee(bookID, isBroken);
+        ListADT<Double> penaltyFees = calPenaltyFee(bookID, isNewBroken);
         double lateOfReturnPenalty = penaltyFees.get(0);
         double brokenBookPenalty = penaltyFees.get(1);
 
@@ -73,11 +82,14 @@ public class BorrowBook {
 
         // Payment successful, mark the penalty as paid
         HistoryRecorder.recordPenalty("Late Return", lateOfReturnPenalty, LocalDate.now());
-        if (isBroken) {
+        if (isNewBroken) {
+            book.setBroken(isBroken);
+            System.out.println(book.isBorken());
             HistoryRecorder.recordPenalty("Broken Book", brokenBookPenalty, LocalDate.now());
         }
+
         
-        books.get(0).setIsPenaltyPayed(true);
+        book.setIsPenaltyPayed(true);
         return change;
     }
 
@@ -97,13 +109,17 @@ public class BorrowBook {
             throw new IllegalArgumentException("Book with the specified ID does not exist.");
         }
 
+        // Checking the borken is case by current student or privious student
+        Book book = books.get(0);
+        Boolean isNewBroken = book.isBorken() || isBroken;
+
+
         ListADT<Double> penaltyFees = new ListADT<>();
-        penaltyFees.add(books.get(0).getPenaltyFee());
-        penaltyFees.add(isBroken ? books.get(0).getPrice() : 0);
+        penaltyFees.add(book.getPenaltyFee());
+        penaltyFees.add(isNewBroken ? book.getPrice() : 0);
 
         return penaltyFees;
     }
-
 
     public boolean returnBook(int bookID, int studentID, boolean isBroken) {
         BookDataService bookDataService = new BookDataService();
@@ -145,5 +161,41 @@ public class BorrowBook {
             return true;
         }
         return false;
+    }
+
+    public static void main(String arg[]){
+        UserDataService userDataService = new UserDataService();
+        Testing.addTestUsers(userDataService);
+
+        BookDataService bookDataService = new BookDataService();
+        Testing.addTestBooks(bookDataService);
+
+        BorrowBook borrowBook = new BorrowBook();
+        boolean success = borrowBook.borrowBook(1, 1) && borrowBook.borrowBook(2, 1);
+        System.out.println("Borrowing " + (success ? "successful" : "failed"));
+
+        LocalDate date = LocalDate.of(2024, 2, 6);
+        bookDataService.search(b -> b.getId() == 1).get(0).setBorrowedDate(date);
+
+        // black listed testing.
+        System.out.println("-------------------------------------------------------------------------------------------");
+        System.out.println("Is black listed checking.");
+        success = borrowBook.borrowBook(3, 1);
+        System.out.println("Borrowing " + (success ? "successful" : "failed"));
+
+        // Is broken testing
+        System.out.println("");
+        System.out.println("-------------------------------------------------------------------------------------------");
+        System.out.println("Is broken checking.");
+        borrowBook.payingPenalty(1, 1, 1000, true);
+        borrowBook.returnBook(1, 1, true);
+
+        success = borrowBook.borrowBook(1, 1);
+        System.out.println("Borrowing " + (success ? "successful" : "failed"));
+
+        ListADT<Double> panaltyFees = borrowBook.calPenaltyFee(1, true);
+        System.out.println("Panalty that have to pay: " + (panaltyFees.get(0) + panaltyFees.get(1)));
+
+        bookDataService.displayTable();
     }
 }
