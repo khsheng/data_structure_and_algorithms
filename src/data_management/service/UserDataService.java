@@ -4,6 +4,9 @@ import ADT.ListADT;
 import data_management.entity.*;
 import java.util.Comparator;
 import java.util.function.*;
+import util.DisplayTableAction;
+import util.Testing;
+import util.UserDisplay;
 
 public class UserDataService implements CrudService<UserInfo>{
     public static ListADT<UserInfo> userList = new ListADT<>();
@@ -35,6 +38,10 @@ public class UserDataService implements CrudService<UserInfo>{
     public ListADT<UserInfo> search(Predicate<UserInfo> parameters) {
         ListADT<Integer> matchedIndex = userList.findAll(parameters);
         ListADT<UserInfo> result = new ListADT<>();
+
+        if (matchedIndex.get(0) == -1){
+            return result;
+        }
         
         for (int i = 0; i < matchedIndex.len(); i++) {
             result.add(userList.get(matchedIndex.get(i)));
@@ -94,5 +101,17 @@ public class UserDataService implements CrudService<UserInfo>{
 
         newString.append("      remainingBorrowLimit: ").append(studentMember.getRemainingBorrowLimit()).append(", \n");
         return newString.toString();
+    }
+
+
+    public static void main(String[] args) {
+        BookDataService bookDataService = new BookDataService();
+        Testing.addTestBooks(bookDataService);
+
+        UserDataService userDataService = new UserDataService();
+        Testing.addTestUsers(userDataService);
+
+        DisplayTableAction<UserInfo> displayTable = new UserDisplay(userDataService.search(b -> true));
+        displayTable.displayTable();
     }
 }
