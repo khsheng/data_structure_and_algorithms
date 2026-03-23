@@ -1,10 +1,10 @@
-
 import Transaction.TransactionMenu;
 import data_management.service.BookDataService;
 import data_management.service.BorrowBook;
 import data_management.service.HistoryRecorder;
 import data_management.service.UserDataService;
 import java.time.LocalDate;
+import sample_data.book_data;
 import util.Testing;
 
 public class App {
@@ -15,6 +15,9 @@ public class App {
     }
 
     public static void lipwaiTesting(){
+        BookDataService bookDataService = new BookDataService();
+        book_data.seed(bookDataService);
+
         TransactionMenu menu = new TransactionMenu();
         menu.start();
     }
@@ -56,7 +59,7 @@ public class App {
         System.out.println("All book histories recorded:");
         System.out.println(HistoryRecorder.getAllBookHistories());
 
-        bookDataService.displayTable();
+        //bookDataService.displayTable();
     }
 
 
