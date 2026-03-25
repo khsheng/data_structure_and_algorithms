@@ -6,10 +6,10 @@ import data_management.service.BorrowBook;
 import data_management.service.HistoryRecorder;
 import data_management.service.UserDataService;
 import java.time.LocalDate;
-import login.UserCSVLoader;
 import util.BookDisplay;
 import util.DisplayTableAction;
 import util.Testing;
+
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -68,19 +68,16 @@ public class App {
     public static void ryanTesting() {
 
     UserDataService userService = new UserDataService();
-    UserCSVLoader.load("user.csv", userService);
-    //Testing.addTestUsers(userService);
+
+  
+    util.Testing.addTestUsers(userService);
 
     login.LoginManager loginManager = new login.LoginManager(userService);
     login.MenuHandler menuHandler = new login.MenuHandler(userService);
 
     java.util.Scanner sc = new java.util.Scanner(System.in);
 
-    
-    while (true) {   // 🔥 LOOP LOGIN
-
-        System.out.println("\n=== USERS LOADED FROM CSV ===");
-        System.out.println(userService);
+    while (true) {
 
         System.out.println("\n=== LOGIN SYSTEM ===");
 
@@ -89,7 +86,7 @@ public class App {
 
         System.out.print("Enter ID: ");
         int id = sc.nextInt();
-        sc.nextLine(); // 🔥 IMPORTANT (consume newline)
+        sc.nextLine();
 
         data_management.entity.UserInfo user = loginManager.login(name, id);
 
@@ -97,16 +94,13 @@ public class App {
             System.out.println("Login successful!");
             System.out.println("Logged in as: " + user.getRole());
 
-            // 🔥 go into menu
-            menuHandler.start(user);
-
-            // 🔥 after exit menu → comes back here (login again)
+            menuHandler.start(user); // go to menu
 
         } else {
             System.out.println("Login failed.");
         }
-}
     }
+}
 
 }
 
