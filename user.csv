@@ -1,0 +1,15 @@
+role,name,age,extra
+student,Ali,20,Computer Science
+student,Bob,22,Software Engineering
+student,Charlie,21,Information Technology
+student,David,23,Data Science
+student,Eva,19,Cyber Security
+student,Farah,24,Artificial Intelligence
+student,George,22,Information Systems
+student,Hana,20,Multimedia Computing
+staff,John,35,Librarian
+staff,Sarah,40,Manager
+staff,Michael,38,Administrator
+staff,Linda,45,Senior Librarian
+staff,Kevin,33,System Analyst
+staff,Rachel,37,HR Officer

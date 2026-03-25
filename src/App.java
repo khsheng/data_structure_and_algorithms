@@ -6,13 +6,15 @@ import data_management.service.BorrowBook;
 import data_management.service.HistoryRecorder;
 import data_management.service.UserDataService;
 import java.time.LocalDate;
+import login.UserCSVLoader;
 import util.BookDisplay;
 import util.DisplayTableAction;
 import util.Testing;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        lipwaiTesting();
+        ryanTesting();
+        //lipwaiTesting();
         
         //khsTesting();
     }
@@ -63,7 +65,52 @@ public class App {
         displayTable.displayTable();
     }
 
+    public static void ryanTesting() {
 
+    UserDataService userService = new UserDataService();
+    UserCSVLoader.load("user.csv", userService);
+    //Testing.addTestUsers(userService);
 
+    login.LoginManager loginManager = new login.LoginManager(userService);
+    login.MenuHandler menuHandler = new login.MenuHandler(userService);
+
+    java.util.Scanner sc = new java.util.Scanner(System.in);
+
+    
+    while (true) {   // 🔥 LOOP LOGIN
+
+        System.out.println("\n=== USERS LOADED FROM CSV ===");
+        System.out.println(userService);
+
+        System.out.println("\n=== LOGIN SYSTEM ===");
+
+        System.out.print("Enter Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter ID: ");
+        int id = sc.nextInt();
+        sc.nextLine(); // 🔥 IMPORTANT (consume newline)
+
+        data_management.entity.UserInfo user = loginManager.login(name, id);
+
+        if (user != null) {
+            System.out.println("Login successful!");
+            System.out.println("Logged in as: " + user.getRole());
+
+            // 🔥 go into menu
+            menuHandler.start(user);
+
+            // 🔥 after exit menu → comes back here (login again)
+
+        } else {
+            System.out.println("Login failed.");
+        }
+}
+    }
 
 }
+
+
+
+
+
