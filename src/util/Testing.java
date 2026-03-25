@@ -9,16 +9,16 @@ import data_management.service.UserDataService;
 
 public class Testing {
     public static void addTestUsers(UserDataService userDataService) {
-        UserInfo user1 = new Student("Alice", 20, "Computer Science");
-        UserInfo user2 = new Staff("Bob", 30, "Librarian");
-        UserInfo user3 = new Student("Charlie", 22, "Information Technology");
-        UserInfo user4 = new Staff("Diana", 28, "Assistant Librarian");
-        UserInfo user5 = new Student("Ethan", 19, "Software Engineering");
-        UserInfo user6 = new Staff("Fiona", 35, "Library Manager");
-        UserInfo user7 = new Student("George", 21, "Data Science");
-        UserInfo user8 = new Staff("Hannah", 40, "Archivist");
-        UserInfo user9 = new Student("Isabella", 23, "Artificial Intelligence");
-        UserInfo user10 = new Staff("Jack", 33, "Library Technician");
+        UserInfo user1  = new Student("Alice", 20, "Computer Science", "alice123");
+        UserInfo user2  = new Staff("Bob", 30, "Librarian", "bobPass");
+        UserInfo user3  = new Student("Charlie", 22, "Information Technology", "charlieIT");
+        UserInfo user4  = new Staff("Diana", 28, "Assistant Librarian", "dianaLib");
+        UserInfo user5  = new Student("Ethan", 19, "Software Engineering", "ethanSE");
+        UserInfo user6  = new Staff("Fiona", 35, "Library Manager", "fionaMgr");
+        UserInfo user7  = new Student("George", 21, "Data Science", "georgeDS");
+        UserInfo user8  = new Staff("Hannah", 40, "Archivist", "hannahArc");
+        UserInfo user9  = new Student("Isabella", 23, "Artificial Intelligence", "isabellaAI");
+        UserInfo user10 = new Staff("Jack", 33, "Library Technician", "jackTech");
 
         // Add them all to the service
         userDataService.add(user1);

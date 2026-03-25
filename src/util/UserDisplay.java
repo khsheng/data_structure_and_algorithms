@@ -143,4 +143,12 @@ public class UserDisplay extends DisplayTableAction<UserInfo> {
     public ListADT<UserInfo> search (Predicate<UserInfo> parameter){
         return dataService.search(parameter);
     }
+
+    public static void main(String[] args) {
+        UserDataService userDataService = new UserDataService();
+        Testing.addTestUsers(userDataService);
+
+        DisplayTableAction<UserInfo> displayTable = new UserDisplay(userDataService.search(u -> true));
+        displayTable.displayTable();
+    }
 }
