@@ -1,14 +1,15 @@
 
 import Transaction.TransactionMenu;
-import data_management.entity.Book;
+import data_management.entity.UserInfo;
 import data_management.service.BookDataService;
 import data_management.service.BorrowBook;
 import data_management.service.HistoryRecorder;
 import data_management.service.UserDataService;
 import java.time.LocalDate;
-import util.BookDisplay;
 import util.DisplayTableAction;
 import util.Testing;
+import util.UserDisplay;
+
 
 
 public class App {
@@ -61,7 +62,11 @@ public class App {
         System.out.println("All book histories recorded:");
         System.out.println(HistoryRecorder.getAllBookHistories());
 
-        DisplayTableAction<Book> displayTable = new BookDisplay(bookDataService.search(b -> true));
+
+        System.out.println(userDataService.search(b -> true));
+
+        //DisplayTableAction<Book> displayTable = new BookDisplay(bookDataService.search(b -> true));
+        DisplayTableAction<UserInfo> displayTable = new UserDisplay(userDataService.search(u -> true));
         displayTable.displayTable();
     }
 
