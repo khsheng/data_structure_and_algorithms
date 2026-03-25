@@ -69,7 +69,4 @@ public class App {
         displayTable.displayTable();
     }
 
-
-
-
 }
