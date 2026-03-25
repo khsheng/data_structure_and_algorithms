@@ -14,9 +14,10 @@ import util.UserDisplay;
 
 public class App {
     public static void main(String[] args) throws Exception {
+        ryanTesting();
         //lipwaiTesting();
         
-        khsTesting();
+        //khsTesting();
     }
 
     public static void lipwaiTesting(){
@@ -69,4 +70,46 @@ public class App {
         displayTable.displayTable();
     }
 
+    public static void ryanTesting() {
+
+    UserDataService userService = new UserDataService();
+
+  
+    util.Testing.addTestUsers(userService);
+
+    login.LoginManager loginManager = new login.LoginManager(userService);
+    login.MenuHandler menuHandler = new login.MenuHandler(userService);
+
+    java.util.Scanner sc = new java.util.Scanner(System.in);
+
+    while (true) {
+
+        System.out.println("\n=== LOGIN SYSTEM ===");
+
+        System.out.print("Enter Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter ID: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+        data_management.entity.UserInfo user = loginManager.login(name, id);
+
+        if (user != null) {
+            System.out.println("Login successful!");
+            System.out.println("Logged in as: " + user.getRole());
+
+            menuHandler.start(user); // go to menu
+
+        } else {
+            System.out.println("Login failed.");
+        }
+    }
 }
+
+}
+
+
+
+
+
