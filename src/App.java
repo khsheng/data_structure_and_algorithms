@@ -14,10 +14,10 @@ import util.UserDisplay;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        //ryanTesting();
+        ryanTesting();
         //lipwaiTesting();
         
-        khsTesting();
+        //khsTesting();
     }
 
     public static void lipwaiTesting(){
@@ -89,11 +89,10 @@ public class App {
         System.out.print("Enter Name: ");
         String name = sc.nextLine();
 
-        System.out.print("Enter ID: ");
-        int id = sc.nextInt();
-        sc.nextLine();
+        System.out.print("Enter Password: ");
+        String password = sc.nextLine();
 
-        data_management.entity.UserInfo user = loginManager.login(name, id);
+        UserInfo user = loginManager.login(name, password);
 
         if (user != null) {
             System.out.println("Login successful!");

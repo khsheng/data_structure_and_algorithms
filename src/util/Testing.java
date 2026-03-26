@@ -9,59 +9,64 @@ import data_management.service.UserDataService;
 
 public class Testing {
     public static void addTestUsers(UserDataService userDataService) {
-        UserInfo user1 = new Student("Ryan", 22, "Computer Science");
-        UserInfo user2 = new Staff("Bob", 30, "Librarian");
-        UserInfo user3 = new Student("Charlie", 22, "Information Technology");
-        UserInfo user4 = new Staff("Diana", 28, "Assistant Librarian");
-        UserInfo user5 = new Student("Ethan", 19, "Software Engineering");
-        UserInfo user6 = new Staff("Fiona", 35, "Library Manager");
-        UserInfo user7 = new Student("George", 21, "Data Science");
-        UserInfo user8 = new Staff("Hannah", 40, "Archivist");
-        UserInfo user9 = new Student("Isabella", 23, "Artificial Intelligence");
-        UserInfo user10 = new Staff("Jack", 33, "Library Technician");
+        UserInfo user1 = new Student("Ryan", 22, "Computer Science", "123");
+        UserInfo user2 = new Staff("admin", 30, "Librarian", "123");
+        UserInfo user3 = new Student("Charlie", 22, "Information Technology", "123");
+        UserInfo user4 = new Staff("Diana", 28, "Assistant Librarian", "admin");
+        UserInfo user5 = new Student("Ethan", 19, "Software Engineering", "123");
+        UserInfo user6 = new Staff("Fiona", 35, "Library Manager", "admin");
+        UserInfo user7 = new Student("George", 21, "Data Science", "123");
+        UserInfo user8 = new Staff("Hannah", 40, "Archivist", "admin");
+        UserInfo user9 = new Student("Isabella", 23, "Artificial Intelligence", "123");
+        UserInfo user10 = new Staff("Jack", 33, "Library Technician", "admin");
 
 // ===== ADD MORE STUDENTS (40 total students) =====
-        UserInfo user11 = new Student("Kevin", 20, "Cyber Security");
-        UserInfo user12 = new Student("Liam", 21, "Software Engineering");
-        UserInfo user13 = new Student("Mia", 22, "Data Science");
-        UserInfo user14 = new Student("Noah", 19, "Computer Science");
-        UserInfo user15 = new Student("Olivia", 23, "Information Systems");
-        UserInfo user16 = new Student("Paul", 20, "Artificial Intelligence");
-        UserInfo user17 = new Student("Quinn", 21, "Cyber Security");
-        UserInfo user18 = new Student("Alice", 22, "Software Engineering");
-        UserInfo user19 = new Student("Sophia", 19, "Data Science");
-        UserInfo user20 = new Student("Thomas", 24, "Computer Science");
+        UserInfo user11 = new Student("Kevin", 20, "Cyber Security", "123");
+        UserInfo user12 = new Student("Liam", 21, "Software Engineering", "123");
+        UserInfo user13 = new Student("Mia", 22, "Data Science", "123");
+        UserInfo user14 = new Student("Noah", 19, "Computer Science", "123");
+        UserInfo user15 = new Student("Olivia", 23, "Information Systems", "123");
+        UserInfo user16 = new Student("Paul", 20, "Artificial Intelligence", "123");
+        UserInfo user17 = new Student("Quinn", 21, "Cyber Security", "123");
+        UserInfo user18 = new Student("Alice", 22, "Software Engineering", "123");
+        UserInfo user19 = new Student("Sophia", 19, "Data Science", "123");
+        UserInfo user20 = new Student("Thomas", 24, "Computer Science", "123");
 
-        UserInfo user21 = new Student("Uma", 20, "Information Technology");
-        UserInfo user22 = new Student("Victor", 21, "Software Engineering");
-        UserInfo user23 = new Student("Wendy", 22, "Artificial Intelligence");
-        UserInfo user24 = new Student("Xavier", 23, "Cyber Security");
-        UserInfo user25 = new Student("Yara", 20, "Computer Science");
-        UserInfo user26 = new Student("Zack", 21, "Data Science");
-        UserInfo user27 = new Student("Aaron", 22, "Software Engineering");
-        UserInfo user28 = new Student("Bella", 19, "Information Systems");
-        UserInfo user29 = new Student("Cody", 23, "Cyber Security");
-        UserInfo user30 = new Student("Daisy", 20, "Artificial Intelligence");
+        UserInfo user21 = new Student("Uma", 20, "Information Technology", "123");
+        UserInfo user22 = new Student("Victor", 21, "Software Engineering", "123");
+        UserInfo user23 = new Student("Wendy", 22, "Artificial Intelligence", "123");
+        UserInfo user24 = new Student("Xavier", 23, "Cyber Security", "123");
+        UserInfo user25 = new Student("Yara", 20, "Computer Science", "123");
+        UserInfo user26 = new Student("Zack", 21, "Data Science", "123");
+        UserInfo user27 = new Student("Aaron", 22, "Software Engineering", "123");
+        UserInfo user28 = new Student("Bella", 19, "Information Systems", "123");
+        UserInfo user29 = new Student("Cody", 23, "Cyber Security", "123");
+        UserInfo user30 = new Student("Daisy", 20, "Artificial Intelligence", "123");
 
-        UserInfo user31 = new Student("Eli", 21, "Computer Science");
-        UserInfo user32 = new Student("Faith", 22, "Software Engineering");
-        UserInfo user33 = new Student("Gavin", 23, "Data Science");
-        UserInfo user34 = new Student("Hazel", 19, "Cyber Security");
-        UserInfo user35 = new Student("Ivan", 20, "Information Technology");
-        UserInfo user36 = new Student("Julia", 21, "Artificial Intelligence");
-        UserInfo user37 = new Student("Kyle", 22, "Computer Science");
-        UserInfo user38 = new Student("Luna", 23, "Software Engineering");
-        UserInfo user39 = new Student("Mason", 20, "Data Science");
-        UserInfo user40 = new Student("Nina", 21, "Cyber Security");
+        UserInfo user31 = new Student("Eli", 21, "Computer Science", "123");
+        UserInfo user32 = new Student("Faith", 22, "Software Engineering", "123");
+        UserInfo user33 = new Student("Gavin", 23, "Data Science", "123");
+        UserInfo user34 = new Student("Hazel", 19, "Cyber Security", "123");
+        UserInfo user35 = new Student("Ivan", 20, "Information Technology", "123 ");
+        UserInfo user36 = new Student("Julia", 21, "Artificial Intelligence", "123");
+        UserInfo user37 = new Student("Kyle", 22, "Computer Science", "123");
+        UserInfo user38 = new Student("Luna", 23, "Software Engineering", "123");
+        UserInfo user39 = new Student("Mason", 20, "Data Science", "123");
+        UserInfo user40 = new Student("Nina", 21, "Cyber Security", "123");
 
 // ===== ADD REMAINING STAFF (total staff = 10) =====
-        UserInfo user41 = new Staff("Oscar", 36, "Senior Librarian");
-        UserInfo user42 = new Staff("Penelope", 38, "HR Manager");
-        UserInfo user43 = new Staff("Quincy", 41, "System Administrator");
-        UserInfo user44 = new Staff("Rachel", 37, "Library Officer");
-        UserInfo user45 = new Staff("Steven", 39, "IT Support");
-        UserInfo user46 = new Staff("Tina", 42, "Operations Manager");
-        UserInfo user47 = new Staff("admin", 42, "Operations Manager");
+        UserInfo user41 = new Staff("Oscar", 36, "Senior Librarian", "admin");
+        UserInfo user42 = new Staff("Penelope", 38, "HR Manager", "admin");
+        UserInfo user43 = new Staff("Quincy", 41, "System Administrator", "admin");
+        UserInfo user44 = new Staff("Rachel", 37, "Library Officer", "admin");
+        UserInfo user45 = new Staff("Steven", 39, "IT Support", "admin");
+        UserInfo user46 = new Staff("Tina", 42, "Operations Manager","admin");
+        UserInfo user47 = new Staff("admin", 42, "Operations    Manager", "admin");
+        UserInfo user48 = new Student("Owen", 20, "Software Engineering", "123");
+        UserInfo user49 = new Student("Penny", 21, "Data Science", "123");
+        UserInfo user50 = new Student("Sam", 22, "Cyber Security", "123");
+
+
 
 
 
@@ -118,6 +123,9 @@ public class Testing {
         userDataService.add(user46);
 
         userDataService.add(user47);
+        userDataService.add(user48);
+        userDataService.add(user49);
+        userDataService.add(user50);
 
 
         // Print out the service contents

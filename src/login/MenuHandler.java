@@ -143,7 +143,10 @@ public class MenuHandler {
         System.out.print("Program: ");
         String program = sc.nextLine();
 
-        Student student = new Student(name, age, program);
+        System.out.print("Password: ");
+        String password = sc.nextLine();
+
+        Student student = new Student(name, age, program, password);
         userService.add(student);
 
         System.out.println("Student created.");
