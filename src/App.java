@@ -14,10 +14,10 @@ import util.UserDisplay;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        ryanTesting();
+        //ryanTesting();
         //lipwaiTesting();
         
-        //khsTesting();
+        khsTesting();
     }
 
     public static void lipwaiTesting(){
