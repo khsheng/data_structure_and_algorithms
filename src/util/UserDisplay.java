@@ -58,8 +58,8 @@ public class UserDisplay extends DisplayTableAction<UserInfo> {
         switch (option) {
             case "1": // ID
                 System.out.print("Enter ID: ");
-                int id = Integer.parseInt(scanner.nextLine());
-                return u -> u.getId() == id;
+                String idKeyword = scanner.nextLine();
+                return u -> String.valueOf(u.getId()).contains(idKeyword);
 
             case "2": // Name
                 System.out.print("Enter Name keyword: ");
@@ -68,28 +68,28 @@ public class UserDisplay extends DisplayTableAction<UserInfo> {
 
             case "3": // Age
                 System.out.print("Enter Age: ");
-                int age = Integer.parseInt(scanner.nextLine());
-                return u -> u.getAge() == age;
+                String ageKeyword = scanner.nextLine();
+                return u -> String.valueOf(u.getAge()).contains(ageKeyword);
 
             case "4": // Role (student/staff)
                 System.out.print("Enter Role (student/staff): ");
                 String role = scanner.nextLine();
-                return u -> u.getRole().equalsIgnoreCase(role);
+                return u -> u.getRole().toLowerCase().contains(role.toLowerCase());
 
             case "5": // Program (Student)
                 System.out.print("Enter Program keyword: ");
                 String program = scanner.nextLine();
-                return u -> (u instanceof Student) && ((Student) u).getProgram().equalsIgnoreCase(program);
+                return u -> (u instanceof Student) && ((Student) u).getProgram().toLowerCase().contains(program.toLowerCase());
 
             case "6": // Position (Staff)
                 System.out.print("Enter Position keyword: ");
                 String position = scanner.nextLine();
-                return u -> (u instanceof Staff) && ((Staff) u).getPosition().equalsIgnoreCase(position);
+                return u -> (u instanceof Staff) && ((Staff) u).getPosition().toLowerCase().contains(position.toLowerCase());
 
             case "8": // Blacklisted (Student)
                 System.out.print("Search blacklisted students? (true/false): ");
-                boolean blacklisted = Boolean.parseBoolean(scanner.nextLine());
-                return u -> (u instanceof Student) && ((Student) u).isBlackListed() == blacklisted;
+                String blacklistedKeyword = scanner.nextLine();
+                return u -> (u instanceof Student) && String.valueOf(((Student) u).isBlackListed()).contains(blacklistedKeyword);
 
             default:
                 return u -> false;
