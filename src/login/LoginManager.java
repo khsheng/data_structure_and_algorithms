@@ -12,11 +12,11 @@ public class LoginManager {
         this.userService = userService;
     }
 
-    public UserInfo login(String name, String password) {
+    public UserInfo login(String username, String password) {
 
-    ADT.ListADT<UserInfo> result =
+    ListADT<UserInfo> result =
         userService.search(u ->
-            u.getName().equalsIgnoreCase(name)
+            u.getUserName().equalsIgnoreCase(username)
             && u.checkPassword(password)
         );
 

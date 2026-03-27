@@ -66,7 +66,7 @@ public class MenuHandler {
             System.out.println("1. View All Users");
             System.out.println("2. Edit Student Info");
             System.out.println("3. Update Own Info");
-            System.out.println("4. Create Student");
+            System.out.println("4. Create Staff");
             System.out.println("0. Exit");
 
             System.out.print("Select Option: ");
@@ -87,7 +87,7 @@ public class MenuHandler {
                     break;
 
                 case 4:
-                    createStudent();
+                    createStaff();
                     break;
             }
 
@@ -132,7 +132,20 @@ public class MenuHandler {
         System.out.println("Deleted successfully.");
 }
 
-    private void createStudent() {
+    private void createStaff() {
+
+        System.out.print("Username: ");
+        String userName = sc.nextLine();
+
+    
+        ADT.ListADT<UserInfo> exist =
+        userService.search(u -> u.getUserName().equalsIgnoreCase(userName));
+
+        if (exist.len() > 0) {
+        System.out.println("Username already exists!");
+        return;
+    }
+
         System.out.print("Name: ");
         String name = sc.nextLine();
 
@@ -140,17 +153,19 @@ public class MenuHandler {
         int age = sc.nextInt();
         sc.nextLine();
 
-        System.out.print("Program: ");
-        String program = sc.nextLine();
+        System.out.print("Position: ");
+        String position = sc.nextLine();
 
         System.out.print("Password: ");
         String password = sc.nextLine();
 
-        Student student = new Student(name, age, program, password);
-        userService.add(student);
+    
+        Staff staff = new Staff(userName, name, age, position, password);
 
-        System.out.println("Student created.");
-    }
+        userService.add(staff);
+
+        System.out.println("Staff created successfully.");
+}
 
     private void updateStudentInfo(Student student) {
 
@@ -165,8 +180,9 @@ public class MenuHandler {
             System.out.println("3. Update Program");
             System.out.println("0. Back");
 
+            System.out.print("Select Option: ");
             choice = sc.nextInt();
-            sc.nextLine();
+            sc.nextLine(); 
 
             switch (choice) {
                 case 1:
@@ -206,7 +222,7 @@ public class MenuHandler {
     int currentPage = 0;
     final int PAGE_SIZE = 10;
 
-    // 🔥 Get ONLY students
+    //Get ONLY students
     ADT.ListADT<data_management.entity.UserInfo> allUsers =
             userService.search(u -> u instanceof data_management.entity.Student);
 
@@ -237,7 +253,7 @@ public class MenuHandler {
 
         System.out.print("Select Option: ");
         int choice = sc.nextInt();
-        sc.nextLine(); // 🔥 important
+        sc.nextLine();
 
         switch (choice) {
             case 1:
@@ -297,8 +313,9 @@ public class MenuHandler {
         System.out.println("3. Update Position");
         System.out.println("0. Back");
 
+        System.out.print("Select Option: ");
         choice = sc.nextInt();
-        sc.nextLine();
+        sc.nextLine(); 
 
         switch (choice) {
             case 1:
@@ -326,53 +343,47 @@ public class MenuHandler {
 
 private void viewAllUsers() {
 
-    int currentPage = 0;
-    final int PAGE_SIZE = 10;
+    ADT.ListADT<UserInfo> allUsers =
+        userService.search(u -> true);
 
-    ADT.ListADT<data_management.entity.UserInfo> allUsers =
-            userService.search(u -> true); // get ALL users
+    DisplayTableAction<UserInfo> table =
+        new UserDisplay(allUsers);
 
-    while (true) {
+    table.displayTable(); 
+}
 
-        int start = currentPage * PAGE_SIZE;
-        int end = Math.min(start + PAGE_SIZE, allUsers.len());
+public void registerStudent(Scanner sc) {
 
-        if (start >= allUsers.len()) {
-            System.out.println("No more pages.");
-            currentPage--;
-            continue;
-        }
+    System.out.println("\n=== STUDENT REGISTER ===");
 
-        int totalPages = (int) Math.ceil((double) allUsers.len() / PAGE_SIZE);
+    System.out.print("Username: ");
+    String userName = sc.nextLine();
 
-        System.out.println("\n=== ALL USERS (Page " + (currentPage + 1) + " / " + totalPages + ") ===");
+    // 🔥 CHECK DUPLICATE USERNAME
+    ListADT<UserInfo> exist =
+        userService.search(u -> u.getUserName().equalsIgnoreCase(userName));
 
-        UserDisplay userDisplay = new UserDisplay(allUsers);
-        userDisplay.tableLayout(start, end, allUsers);
-
-        int Pages = (int) Math.ceil((double) allUsers.len() / PAGE_SIZE);
-        System.out.println("Page " + (currentPage + 1) + " / " + Pages);
-
-        System.out.println("\n1. Next Page");
-        System.out.println("2. Previous Page");
-        System.out.println("0. Back");
-
-        System.out.print("Select Option: ");
-        int choice = sc.nextInt();
-        sc.nextLine(); // 🔥 important
-
-        switch (choice) {
-            case 1:
-                currentPage++;
-                break;
-
-            case 2:
-                if (currentPage > 0) currentPage--;
-                break;
-
-            case 0:
-                return;
-        }
+    if (exist.len() > 0) {
+        System.out.println("Username already exists!");
+        return;
     }
+
+    System.out.print("Name: ");
+    String name = sc.nextLine();
+
+    System.out.print("Age: ");
+    int age = Integer.parseInt(sc.nextLine());
+
+    System.out.print("Program: ");
+    String program = sc.nextLine();
+
+    System.out.print("Password: ");
+    String password = sc.nextLine();
+
+    Student student = new Student(userName, name, age, program, password);
+
+    userService.add(student);
+
+    System.out.println("Account created successfully! You can now login.");
 }
 }
