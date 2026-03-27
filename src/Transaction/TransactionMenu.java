@@ -1,11 +1,15 @@
 package Transaction;
 
+import ADT.ListADT;
 import Transaction.Book.Register;
 import Transaction.Book.Update;
 import Transaction.Book.Delete;
 import Transaction.Borrow.Borrow;
 import Transaction.Return.Return;
+import data_management.entity.Book;
 import data_management.service.BookDataService;
+import util.BookDisplay;
+import util.DisplayTableAction;
 
 import java.util.Scanner;
 
@@ -17,6 +21,7 @@ public class TransactionMenu {
     private final Delete delete;
     private final Borrow borrow;
     private final Return returnTransaction;
+    private final BookListPagination bookListPagination;
     private static final BookDataService bookDataService = new BookDataService();
 
     public TransactionMenu() {
@@ -30,6 +35,7 @@ public class TransactionMenu {
         this.delete = new Delete(scanner);
         this.borrow = new Borrow(scanner);
         this.returnTransaction = new Return(scanner);
+        this.bookListPagination = new BookListPagination(scanner);
     }
 
     public void start() {
@@ -79,7 +85,8 @@ public class TransactionMenu {
                     update.updateBook();
                     break;
                 case "3":
-                    // bookDataService.displayTable();
+                    DisplayTableAction<Book> displayTable = new BookDisplay(bookDataService.search(b -> true));
+                    displayTable.displayTable();
                     break;
                 case "4":
                     delete.deleteBook();
@@ -122,6 +129,8 @@ public class TransactionMenu {
     }
 
     private void printBorrowMenu() {
+        ListADT<Book> allBooks = bookDataService.search(book -> true);
+        bookListPagination.displayBooksWithPagination(allBooks);
         System.out.println("\n--- Borrow Menu ---");
         System.out.println("1. Borrow Book");
         System.out.println("0. Back to Main Menu");
