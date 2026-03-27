@@ -1,14 +1,20 @@
 
 import Transaction.TransactionMenu;
+import data_management.entity.UserInfo;
 import data_management.service.BookDataService;
 import data_management.service.BorrowBook;
 import data_management.service.HistoryRecorder;
 import data_management.service.UserDataService;
 import java.time.LocalDate;
+import util.DisplayTableAction;
 import util.Testing;
+import util.UserDisplay;
+
+
 
 public class App {
     public static void main(String[] args) throws Exception {
+        //ryanTesting();
         lipwaiTesting();
         
         //khsTesting();
@@ -56,10 +62,53 @@ public class App {
         System.out.println("All book histories recorded:");
         System.out.println(HistoryRecorder.getAllBookHistories());
 
-        bookDataService.displayTable();
+
+        //System.out.println(userDataService.search(b -> true));
+
+        // DisplayTableAction<Book> displayTable = new BookDisplay(bookDataService.search(b -> true));
+        DisplayTableAction<UserInfo> displayTable = new UserDisplay(userDataService.search(u -> true));
+        displayTable.displayTable();
     }
 
+    public static void ryanTesting() {
 
+    UserDataService userService = new UserDataService();
 
+  
+    util.Testing.addTestUsers(userService);
+
+    login.LoginManager loginManager = new login.LoginManager(userService);
+    login.MenuHandler menuHandler = new login.MenuHandler(userService);
+
+    java.util.Scanner sc = new java.util.Scanner(System.in);
+
+    while (true) {
+
+        System.out.println("\n=== LOGIN SYSTEM ===");
+
+        System.out.print("Enter Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Password: ");
+        String password = sc.nextLine();
+
+        UserInfo user = loginManager.login(name, password);
+
+        if (user != null) {
+            System.out.println("Login successful!");
+            System.out.println("Logged in as: " + user.getRole());
+
+            menuHandler.start(user); // go to menu
+
+        } else {
+            System.out.println("Login failed.");
+        }
+    }
+}
 
 }
+
+
+
+
+

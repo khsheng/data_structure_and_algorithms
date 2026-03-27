@@ -79,7 +79,7 @@ public class TransactionMenu {
                     update.updateBook();
                     break;
                 case "3":
-                    bookDataService.displayTable();
+                    // bookDataService.displayTable();
                     break;
                 case "4":
                     delete.deleteBook();

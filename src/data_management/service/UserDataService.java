@@ -4,19 +4,32 @@ import ADT.ListADT;
 import data_management.entity.*;
 import java.util.Comparator;
 import java.util.function.*;
+import util.DisplayTableAction;
+import util.Testing;
+import util.UserDisplay;
 
 public class UserDataService implements CrudService<UserInfo>{
     public static ListADT<UserInfo> userList = new ListADT<>();
 
     @Override
     public void add(UserInfo user) {
+        // Check uniqueness before adding
+        if (!isUsernameUnique(user.getName())) {
+            System.err.println("Error: Username '" + user.getName() + "' already exists!");
+            return; // stop here, do not add duplicate
+        }
         userList.add(user);
     }
 
     @Override
     public void add(ListADT<UserInfo> users) {
         for (int i = 0; i < users.len(); i++) {
-            userList.add(users.get(i));
+            UserInfo u = users.get(i);
+            if (isUsernameUnique(u.getName())) {
+                userList.add(u);
+            } else {
+                System.err.println("Skipped duplicate username: " + u.getName());
+            }
         }
     }
 
@@ -35,6 +48,10 @@ public class UserDataService implements CrudService<UserInfo>{
     public ListADT<UserInfo> search(Predicate<UserInfo> parameters) {
         ListADT<Integer> matchedIndex = userList.findAll(parameters);
         ListADT<UserInfo> result = new ListADT<>();
+
+        if (matchedIndex.get(0) == -1){
+            return result;
+        }
         
         for (int i = 0; i < matchedIndex.len(); i++) {
             result.add(userList.get(matchedIndex.get(i)));
@@ -47,6 +64,14 @@ public class UserDataService implements CrudService<UserInfo>{
         userList.sort(comparator);
         return userList;
     }
+
+    public boolean isUsernameUnique(String username) {
+        ListADT<Integer> matchedIndex = userList.findAll(
+            u -> u.getName().equalsIgnoreCase(username)
+        );
+        return matchedIndex.len() == 1 && matchedIndex.get(0) == -1;
+    }
+
 
     @Override
     public String toString() {
@@ -94,5 +119,17 @@ public class UserDataService implements CrudService<UserInfo>{
 
         newString.append("      remainingBorrowLimit: ").append(studentMember.getRemainingBorrowLimit()).append(", \n");
         return newString.toString();
+    }
+
+
+    public static void main(String[] args) {
+        BookDataService bookDataService = new BookDataService();
+        Testing.addTestBooks(bookDataService);
+
+        UserDataService userDataService = new UserDataService();
+        Testing.addTestUsers(userDataService);
+
+        DisplayTableAction<UserInfo> displayTable = new UserDisplay(userDataService.search(b -> true));
+        displayTable.displayTable();
     }
 }
