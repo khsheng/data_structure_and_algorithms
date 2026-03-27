@@ -114,7 +114,7 @@ public class BookDisplay extends DisplayTableAction<Book>{
                 return book -> book.getPrice() >= min && book.getPrice() <= max;
 
             case "6": // Borrowed status
-                System.out.print("Search borrowed books? (true/false): ");
+                System.out.print("Search borrowed books?: ");
                 String borrowedKeyword = scanner.nextLine();
             return book -> String.valueOf(book.isBorrowed()).contains(borrowedKeyword);
 
