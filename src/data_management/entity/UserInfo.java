@@ -9,6 +9,7 @@ public abstract class UserInfo {
     private static int counter = 1;
 
     protected int id;
+    protected String userName;
     protected String name;
     protected int age;
     protected String role;
@@ -16,8 +17,9 @@ public abstract class UserInfo {
     protected boolean isBlacklisted = false;
     protected String hashedPassword;
 
-    public UserInfo(String name, int age, String role, String password) {
+    public UserInfo(String userName,String name, int age, String role, String password) {
         this.id = counter;
+        this.userName = userName;
         this.name = name;
         this.age = age;
         this.role = role;
@@ -30,12 +32,14 @@ public abstract class UserInfo {
 
     // Getters
     public int getId() { return this.id; }
+    public String getUserName() {return this.userName; }    
     public String getName() { return this.name; }
     public int getAge() { return this.age; }
     public String getRole() { return this.role; }
     public LocalDate getRegistrationDate() { return this.registrationDate; }
 
     // Setters
+    public void setUserName(String userName) { this.userName = userName; }
     public void setName(String name) { this.name = name; }
     public void setAge(int age) { this.age = age; }
 
@@ -55,7 +59,7 @@ public abstract class UserInfo {
     }
 
     // Utility class for password hashing
-    private class PasswordUtils {
+    private static class PasswordUtils {
         private static String hashPassword(String plainPassword) {
             try {
                 MessageDigest md = MessageDigest.getInstance("SHA-256");

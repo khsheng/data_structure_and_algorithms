@@ -12,15 +12,18 @@ public class LoginManager {
         this.userService = userService;
     }
 
-    public UserInfo login(String name, int id) {
-        ListADT<UserInfo> users = userService.search(
-            u -> u.getName().equalsIgnoreCase(name) && u.getId() == id
+    public UserInfo login(String name, String password) {
+
+    ADT.ListADT<UserInfo> result =
+        userService.search(u ->
+            u.getName().equalsIgnoreCase(name)
+            && u.checkPassword(password)
         );
 
-        if (users.len() > 0) {
-            return users.get(0);
-        }
-
+    if (result.len() == 0) {
         return null;
     }
+
+    return result.get(0);
+}
 }

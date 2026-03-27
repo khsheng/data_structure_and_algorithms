@@ -16,7 +16,7 @@ public abstract class DisplayTableAction<T> {
     }
 
     public void displayTable() {
-        int pageSize = 5;
+        int pageSize = 10;
         if (displayList.len() == 0) {
             System.out.println("No books available.");
             return;

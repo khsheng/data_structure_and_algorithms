@@ -13,13 +13,23 @@ public class UserDataService implements CrudService<UserInfo>{
 
     @Override
     public void add(UserInfo user) {
+        // Check uniqueness before adding
+        if (!isUsernameUnique(user.getName())) {
+            System.err.println("Error: Username '" + user.getName() + "' already exists!");
+            return; // stop here, do not add duplicate
+        }
         userList.add(user);
     }
 
     @Override
     public void add(ListADT<UserInfo> users) {
         for (int i = 0; i < users.len(); i++) {
-            userList.add(users.get(i));
+            UserInfo u = users.get(i);
+            if (isUsernameUnique(u.getName())) {
+                userList.add(u);
+            } else {
+                System.err.println("Skipped duplicate username: " + u.getName());
+            }
         }
     }
 
@@ -54,6 +64,14 @@ public class UserDataService implements CrudService<UserInfo>{
         userList.sort(comparator);
         return userList;
     }
+
+    public boolean isUsernameUnique(String username) {
+        ListADT<Integer> matchedIndex = userList.findAll(
+            u -> u.getName().equalsIgnoreCase(username)
+        );
+        return matchedIndex.len() == 1 && matchedIndex.get(0) == -1;
+    }
+
 
     @Override
     public String toString() {
