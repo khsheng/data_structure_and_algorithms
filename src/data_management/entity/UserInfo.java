@@ -55,7 +55,7 @@ public abstract class UserInfo {
     }
 
     // Utility class for password hashing
-    private class PasswordUtils {
+    private static class PasswordUtils {
         private static String hashPassword(String plainPassword) {
             try {
                 MessageDigest md = MessageDigest.getInstance("SHA-256");
