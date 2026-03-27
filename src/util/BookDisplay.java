@@ -136,7 +136,7 @@ public class BookDisplay extends DisplayTableAction<Book>{
                 return book -> String.valueOf(book.isPenaltyPayed()).contains(penaltyKeyword);
 
             case "10": // Broken
-                System.out.print("Search broken books? (true/false): ");
+                System.out.print("Search broken books?: ");
                 String brokenKeyword = scanner.nextLine();
                 return book -> String.valueOf(book.isBorken()).contains(brokenKeyword);
 
