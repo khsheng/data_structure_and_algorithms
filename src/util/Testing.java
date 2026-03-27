@@ -21,7 +21,7 @@ public class Testing {
         UserInfo user10 = new Staff("Jack", 33, "Library Technician", "admin");
 
 // ===== ADD MORE STUDENTS (40 total students) =====
-        UserInfo user11 = new Student("Kevin", 20, "Cyber Security", "123");
+        UserInfo user11 = new Student("Khs", 20, "Cyber Security", "123");
         UserInfo user12 = new Student("Liam", 21, "Software Engineering", "123");
         UserInfo user13 = new Student("Mia", 22, "Data Science", "123");
         UserInfo user14 = new Student("Noah", 19, "Computer Science", "123");
@@ -61,7 +61,7 @@ public class Testing {
         UserInfo user44 = new Staff("Rachel", 37, "Library Officer", "admin");
         UserInfo user45 = new Staff("Steven", 39, "IT Support", "admin");
         UserInfo user46 = new Staff("Tina", 42, "Operations Manager","admin");
-        UserInfo user47 = new Staff("admin", 42, "Operations    Manager", "admin");
+        UserInfo user47 = new Staff("admin", 42, "Operations Manager", "admin");
         UserInfo user48 = new Student("Owen", 20, "Software Engineering", "123");
         UserInfo user49 = new Student("Penny", 21, "Data Science", "123");
         UserInfo user50 = new Student("Sam", 22, "Cyber Security", "123");

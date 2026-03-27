@@ -9,8 +9,8 @@ public class Student extends UserInfo {
     private String remark = "-";
     private static final int MAXBORROWS = 5;
 
-    public Student(String name, int age, String program, String password) {
-        super(name, age, "student", password);
+    public Student(String userName, String name, int age, String program, String password) {
+        super(userName, name, age, "student", password);
         this.program = program;
         this.borrowedBooks = new ListADT<>();
     }

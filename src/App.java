@@ -14,8 +14,8 @@ import util.UserDisplay;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        ryanTesting();
-        //lipwaiTesting();
+        //ryanTesting();
+        lipwaiTesting();
         
         //khsTesting();
     }
@@ -63,9 +63,9 @@ public class App {
         System.out.println(HistoryRecorder.getAllBookHistories());
 
 
-        System.out.println(userDataService.search(b -> true));
+        //System.out.println(userDataService.search(b -> true));
 
-        //DisplayTableAction<Book> displayTable = new BookDisplay(bookDataService.search(b -> true));
+        // DisplayTableAction<Book> displayTable = new BookDisplay(bookDataService.search(b -> true));
         DisplayTableAction<UserInfo> displayTable = new UserDisplay(userDataService.search(u -> true));
         displayTable.displayTable();
     }
