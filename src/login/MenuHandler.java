@@ -133,6 +133,19 @@ public class MenuHandler {
 }
 
     private void createStaff() {
+
+        System.out.print("Username: ");
+        String userName = sc.nextLine();
+
+    
+        ADT.ListADT<UserInfo> exist =
+        userService.search(u -> u.getUserName().equalsIgnoreCase(userName));
+
+        if (exist.len() > 0) {
+        System.out.println("Username already exists!");
+        return;
+    }
+
         System.out.print("Name: ");
         String name = sc.nextLine();
 
@@ -146,11 +159,13 @@ public class MenuHandler {
         System.out.print("Password: ");
         String password = sc.nextLine();
 
-        Staff staff = new Staff(name, age, position, password);
+    
+        Staff staff = new Staff(userName, name, age, position, password);
+
         userService.add(staff);
 
         System.out.println("Staff created successfully.");
-    }
+}
 
     private void updateStudentInfo(Student student) {
 
@@ -335,5 +350,40 @@ private void viewAllUsers() {
         new UserDisplay(allUsers);
 
     table.displayTable(); 
+}
+
+public void registerStudent(Scanner sc) {
+
+    System.out.println("\n=== STUDENT REGISTER ===");
+
+    System.out.print("Username: ");
+    String userName = sc.nextLine();
+
+    // 🔥 CHECK DUPLICATE USERNAME
+    ListADT<UserInfo> exist =
+        userService.search(u -> u.getUserName().equalsIgnoreCase(userName));
+
+    if (exist.len() > 0) {
+        System.out.println("Username already exists!");
+        return;
+    }
+
+    System.out.print("Name: ");
+    String name = sc.nextLine();
+
+    System.out.print("Age: ");
+    int age = Integer.parseInt(sc.nextLine());
+
+    System.out.print("Program: ");
+    String program = sc.nextLine();
+
+    System.out.print("Password: ");
+    String password = sc.nextLine();
+
+    Student student = new Student(userName, name, age, program, password);
+
+    userService.add(student);
+
+    System.out.println("Account created successfully! You can now login.");
 }
 }

@@ -14,7 +14,11 @@ import util.UserDisplay;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        ryanTesting();
+        login();
+
+        // testing -----------------------------------------------------------
+
+        
         //lipwaiTesting();
         
         //khsTesting();
@@ -63,18 +67,16 @@ public class App {
         System.out.println(HistoryRecorder.getAllBookHistories());
 
 
-        System.out.println(userDataService.search(b -> true));
+        //System.out.println(userDataService.search(b -> true));
 
-        //DisplayTableAction<Book> displayTable = new BookDisplay(bookDataService.search(b -> true));
+        // DisplayTableAction<Book> displayTable = new BookDisplay(bookDataService.search(b -> true));
         DisplayTableAction<UserInfo> displayTable = new UserDisplay(userDataService.search(u -> true));
         displayTable.displayTable();
     }
 
-    public static void ryanTesting() {
+public static void login() {
 
     UserDataService userService = new UserDataService();
-
-  
     util.Testing.addTestUsers(userService);
 
     login.LoginManager loginManager = new login.LoginManager(userService);
@@ -85,23 +87,43 @@ public class App {
     while (true) {
 
         System.out.println("\n=== LOGIN SYSTEM ===");
+        System.out.println("1. Login");
+        System.out.println("2. Register (Student)");
+        System.out.println("0. Exit");
 
-        System.out.print("Enter Name: ");
-        String name = sc.nextLine();
+        System.out.print("Select Option: ");
+        int choice = Integer.parseInt(sc.nextLine());
 
-        System.out.print("Enter Password: ");
-        String password = sc.nextLine();
+        switch (choice) {
 
-        UserInfo user = loginManager.login(name, password);
+            case 1:
+                // ✅ LOGIN
+                System.out.print("Enter Username: ");
+                String userName = sc.nextLine();
 
-        if (user != null) {
-            System.out.println("Login successful!");
-            System.out.println("Logged in as: " + user.getRole());
+                System.out.print("Enter Password: ");
+                String password = sc.nextLine();
 
-            menuHandler.start(user); // go to menu
+                UserInfo user = loginManager.login(userName, password);
 
-        } else {
-            System.out.println("Login failed.");
+                if (user != null) {
+                    System.out.println("Login successful!");
+                    System.out.println("Logged in as: " + user.getRole());
+
+                    menuHandler.start(user); // go to menu
+                } else {
+                    System.out.println("Login failed.");
+                }
+                break;
+
+            case 2:
+                // ✅ REGISTER STUDENT
+                menuHandler.registerStudent(sc);
+                break;
+
+            case 0:
+                System.out.println("Exiting system...");
+                return;
         }
     }
 }
