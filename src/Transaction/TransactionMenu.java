@@ -5,9 +5,14 @@ import Transaction.Book.Update;
 import Transaction.Book.Delete;
 import Transaction.Borrow.Borrow;
 import Transaction.Return.Return;
+import data_management.entity.Book;
 import data_management.service.BookDataService;
+import util.BookDisplay;
+import util.DisplayTableAction;
 
 import java.util.Scanner;
+
+import ADT.ListADT;
 
 
 public class TransactionMenu {
@@ -23,13 +28,75 @@ public class TransactionMenu {
         this(new Scanner(System.in));
     }
 
-    TransactionMenu(Scanner scanner) {
+    public TransactionMenu(Scanner scanner) {
         this.scanner = scanner;
         this.register = new Register(scanner);
         this.update = new Update(scanner);
         this.delete = new Delete(scanner);
         this.borrow = new Borrow(scanner);
         this.returnTransaction = new Return(scanner);
+    }
+
+    public void startForStudent(int studentID) {
+        boolean running = true;
+        while (running) {
+            printStudentMenu();
+            String choice = scanner.nextLine().trim();
+            switch (choice) {
+                case "1":
+                    borrowBookAsStudent(studentID);
+                    break;
+                case "2":
+                    returnBookAsStudent(studentID);
+                    break;
+                case "3":
+                    DisplayTableAction<Book> displayTable = new BookDisplay(bookDataService.search(b -> true));
+                    displayTable.displayTable();
+                    break;
+                case "0":
+                    running = false;
+                    System.out.println("Exiting borrow menu. Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    private void printStudentMenu() {
+        System.out.println("\n--- Student Borrow Menu ---");
+        System.out.println("1. Borrow Book");
+        System.out.println("2. Return Book");
+        System.out.println("3. Display Book");
+        System.out.println("0. Back");
+        System.out.print("Select an option: ");
+    }
+
+    private void borrowBookAsStudent(int studentID) {
+        ListADT<Book> allBooks = bookDataService.search(book -> true);
+        BookListPagination pagination = new BookListPagination(scanner);
+        pagination.displayBooksWithPagination(allBooks);
+        
+        System.out.print("Enter Book ID: ");
+        int bookID = getIntInput();
+        
+        Borrow.BorrowResult result = borrow.borrowBook(bookID, studentID);
+        
+        if (result.isSuccess()) {
+            System.out.println("\n✓ " + result.getMessage());
+        } else {
+            System.out.println("\n✗ " + result.getMessage());
+        }
+    }
+
+    private void returnBookAsStudent(int studentID) {
+        Return.ReturnResult result = returnTransaction.returnBookAsStudent(studentID);
+        
+        if (result.isSuccess()) {
+            System.out.println("\n✓ " + result.getMessage());
+        } else {
+            System.out.println("\n✗ " + result.getMessage());
+        }
     }
 
     public void start() {
@@ -79,7 +146,8 @@ public class TransactionMenu {
                     update.updateBook();
                     break;
                 case "3":
-                    // bookDataService.displayTable();
+                    DisplayTableAction<Book> displayTable = new BookDisplay(bookDataService.search(b -> true));
+                    displayTable.displayTable();
                     break;
                 case "4":
                     delete.deleteBook();

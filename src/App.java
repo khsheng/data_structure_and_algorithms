@@ -79,6 +79,10 @@ public static void login() {
     UserDataService userService = new UserDataService();
     util.Testing.addTestUsers(userService);
 
+    BookDataService bookDataService = new BookDataService();
+    util.Testing.addTestBooks(bookDataService);
+    util.Testing.addTestBorrowedBooks(bookDataService);
+
     login.LoginManager loginManager = new login.LoginManager(userService);
     login.MenuHandler menuHandler = new login.MenuHandler(userService);
 
