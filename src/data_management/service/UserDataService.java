@@ -60,9 +60,33 @@ public class UserDataService implements CrudService<UserInfo>{
         return result;
     }
 
+    @Override
+    public ListADT<UserInfo> search(ListADT<UserInfo> list, Predicate<UserInfo> parameters) {
+        ListADT<UserInfo> copyList = list.copy();
+        ListADT<Integer> matchedIndex = copyList.findAll(parameters);
+        ListADT<UserInfo> result = new ListADT<>();
+
+        if (matchedIndex.get(0) == -1){
+            return result;
+        }
+        
+        for (int i = 0; i < matchedIndex.len(); i++) {
+            result.add(copyList.get(matchedIndex.get(i)));
+        }
+
+        return result;
+    }
+
     public ListADT<UserInfo> sort(Comparator<UserInfo> comparator) {
         userList.sort(comparator);
         return userList;
+    }
+
+    public ListADT<UserInfo> sort(ListADT<UserInfo> list,Comparator<UserInfo> comparator) {
+        ListADT<UserInfo> copyList = list.copy();
+
+        copyList.sort(comparator);
+        return copyList;
     }
 
     public boolean isUsernameUnique(String username) {

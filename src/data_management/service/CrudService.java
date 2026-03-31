@@ -44,4 +44,13 @@ public interface CrudService<T> {
      */
     public ListADT<T> search(Predicate<T> predicate);
 
+
+    /**
+     * Task: Search for records that match the specified criteria
+     * @param list make a copy of the list
+     * @param predicate the condition to filter the records
+     * @return a list of records that match the specified criteria
+     */
+    public ListADT<T> search(ListADT<T> list, Predicate<T> predicate);
+
 }
