@@ -15,11 +15,11 @@ public class Main {
     public static void librarySystem() {
 
         UserDataService userService = new UserDataService();
-        util.Testing.addTestUsers(userService);
+        util.SampleData.addTestUsers(userService);
 
         BookDataService bookDataService = new BookDataService();
-        util.Testing.addTestBooks(bookDataService);
-        util.Testing.addTestBorrowedBooks(bookDataService);
+        util.SampleData.addTestBooks(bookDataService);
+        util.SampleData.addTestBorrowedBooks(bookDataService);
 
 
         login.LoginManager loginManager = new login.LoginManager(userService);

@@ -49,7 +49,7 @@ public class Book {
         return this.isBorrowed;
     }
 
-    public boolean isBorken() {
+    public boolean isBroken() {
         return this.isBroken;
     }
 
