@@ -5,10 +5,10 @@ import data_management.entity.Staff;
 import data_management.entity.Student;
 import data_management.entity.UserInfo;
 import data_management.service.BookDataService;
-import data_management.service.UserDataService;
 import data_management.service.BorrowBook;
+import data_management.service.UserDataService;
 
-public class Testing {
+public class SampleData {
     public static void addTestUsers(UserDataService userDataService) {
         UserInfo user1 = new Student("ryan123", "Ryan", 22, "Computer Science", "123");
         UserInfo user2 = new Staff("admin1", "Admin Bob", 30, "Librarian", "123");
@@ -126,10 +126,6 @@ public class Testing {
         userDataService.add(user48);
         userDataService.add(user49);
         userDataService.add(user50);
-
-
-        // Print out the service contents
-        System.out.println(userDataService);
     }
 
     public static void addTestBooks(BookDataService bookDataService) {
@@ -194,9 +190,6 @@ public class Testing {
         bookDataService.add(new Book("The Fifth Gallery", "Simon Leclerc", 18.15, "Art"));
         bookDataService.add(new Book("Starlit Archivum", "Ophelia Grant", 21.90, "Fantasy"));
 
-
-        // Print out the service contents
-        System.out.println(bookDataService);
     }
 
     public static void addTestBorrowedBooks(BookDataService bookDataService) {
@@ -223,8 +216,7 @@ public class Testing {
         borrowBookService.borrowBook(18, 23); // Book 18 borrowed by Student 23
         borrowBookService.borrowBook(19, 24); // Book 19 borrowed by Student 24
         borrowBookService.borrowBook(20, 25); // Book 20 borrowed by Student 25
-        
-        System.out.println("✓ 20 students have borrowed books");
+
     }
 
     public static void main(String[] args) {

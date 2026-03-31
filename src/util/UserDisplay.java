@@ -86,10 +86,38 @@ public class UserDisplay extends DisplayTableAction<UserInfo> {
                 String position = scanner.nextLine();
                 return u -> (u instanceof Staff) && ((Staff) u).getPosition().toLowerCase().contains(position.toLowerCase());
 
+            case "7": // Borrowed Books Count (Student)
+                System.out.print("Enter borrowed books count: ");
+                int targetCount = Integer.parseInt(scanner.nextLine());
+
+                return u -> {
+                    if (!(u instanceof Student)) {
+                        return false;
+                    }
+
+                    Student student = (Student) u;
+                    return student.getBorrowedBooks().len() == targetCount;
+                };
+
             case "8": // Blacklisted (Student)
-                System.out.print("Search blacklisted students? (true/false): ");
-                String blacklistedKeyword = scanner.nextLine();
-                return u -> (u instanceof Student) && String.valueOf(((Student) u).isBlackListed()).contains(blacklistedKeyword);
+                System.out.print("Search blacklisted students? (yes/no): ");
+                String blacklistedKeyword = scanner.nextLine().trim().toLowerCase();
+
+                return u -> {
+                    if (!(u instanceof Student)) {
+                        return false;
+                    }
+
+                    Student student = (Student) u;
+
+                    if (blacklistedKeyword.equals("yes")) {
+                        return student.isBlackListed();
+                    } else if (blacklistedKeyword.equals("no")) {
+                        return !student.isBlackListed();
+                    } else {
+                        return true;
+                    }
+                };
 
             default:
                 return u -> false;
@@ -146,7 +174,7 @@ public class UserDisplay extends DisplayTableAction<UserInfo> {
 
     public static void main(String[] args) {
         UserDataService userDataService = new UserDataService();
-        Testing.addTestUsers(userDataService);
+        SampleData.addTestUsers(userDataService);
 
         DisplayTableAction<UserInfo> displayTable = new UserDisplay(userDataService.search(u -> true));
         displayTable.displayTable();

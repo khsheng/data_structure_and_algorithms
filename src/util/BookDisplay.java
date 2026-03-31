@@ -72,7 +72,7 @@ public class BookDisplay extends DisplayTableAction<Book>{
                 comparator = Comparator.comparing(Book::isPenaltyPayed);
                 break;
             case "10": // Broken
-                comparator = Comparator.comparing(Book::isBorken);
+                comparator = Comparator.comparing(Book::isBroken);
                 break;
             default:
                 return null;
@@ -113,9 +113,18 @@ public class BookDisplay extends DisplayTableAction<Book>{
                 return book -> book.getPrice() >= min && book.getPrice() <= max;
 
             case "6": // Borrowed status
-                System.out.print("Search borrowed books?: ");
-                String borrowedKeyword = scanner.nextLine();
-            return book -> String.valueOf(book.isBorrowed()).contains(borrowedKeyword);
+                System.out.print("Search borrowed books? (yes/no): ");
+                String borrowedKeyword = scanner.nextLine().trim().toLowerCase();
+
+                return book -> {
+                    if (borrowedKeyword.equals("yes")) {
+                        return book.isBorrowed();
+                    } else if (borrowedKeyword.equals("no")) {
+                        return !book.isBorrowed();
+                    } else {
+                        return true; // 不过滤
+                    }
+                };
 
             case "7": // Borrowed By
                 System.out.print("Enter borrower name: ");
@@ -135,9 +144,18 @@ public class BookDisplay extends DisplayTableAction<Book>{
                 return book -> String.valueOf(book.isPenaltyPayed()).contains(penaltyKeyword);
 
             case "10": // Broken
-                System.out.print("Search broken books?: ");
-                String brokenKeyword = scanner.nextLine();
-                return book -> String.valueOf(book.isBorken()).contains(brokenKeyword);
+                System.out.print("Search broken books? (yes/no): ");
+                String brokenKeyword = scanner.nextLine().trim().toLowerCase();
+
+                return book -> {
+                    if (brokenKeyword.equals("yes")) {
+                        return book.isBroken();
+                    } else if (brokenKeyword.equals("no")) {
+                        return !book.isBroken();
+                    } else {
+                        return true;
+                    }
+                };
 
             default:
                 System.out.println("Invalid option.");
@@ -181,7 +199,7 @@ public class BookDisplay extends DisplayTableAction<Book>{
                     borrower,
                     borrowedDate,
                     penaltyPaidMessage,
-                    book.isBorken() ? "Yes" : "No");
+                    book.isBroken() ? "Yes" : "No");
         }
     }
 

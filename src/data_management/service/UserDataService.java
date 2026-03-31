@@ -5,7 +5,7 @@ import data_management.entity.*;
 import java.util.Comparator;
 import java.util.function.*;
 import util.DisplayTableAction;
-import util.Testing;
+import util.SampleData;
 import util.UserDisplay;
 
 public class UserDataService implements CrudService<UserInfo>{
@@ -148,10 +148,10 @@ public class UserDataService implements CrudService<UserInfo>{
 
     public static void main(String[] args) {
         BookDataService bookDataService = new BookDataService();
-        Testing.addTestBooks(bookDataService);
+        SampleData.addTestBooks(bookDataService);
 
         UserDataService userDataService = new UserDataService();
-        Testing.addTestUsers(userDataService);
+        SampleData.addTestUsers(userDataService);
 
         DisplayTableAction<UserInfo> displayTable = new UserDisplay(userDataService.search(b -> true));
         displayTable.displayTable();

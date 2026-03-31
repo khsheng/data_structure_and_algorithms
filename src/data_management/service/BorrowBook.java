@@ -3,7 +3,7 @@ package data_management.service;
 import ADT.ListADT;
 import data_management.entity.*;
 import java.time.LocalDate;
-import util.Testing;
+import util.SampleData;
 
 public class BorrowBook {
     public boolean borrowBook(int bookID, int studentID) {
@@ -64,7 +64,7 @@ public class BorrowBook {
         }
 
         Book book = borrowedBooks.get(0);
-        Boolean isNewBroken = book.isBorken() || isBroken;
+        Boolean isNewBroken = book.isBroken() || isBroken;
 
         if (book.getPenaltyFee() < 0 && !isNewBroken) {
             throw new IllegalArgumentException("Book does not have a penalty fee for the student.");
@@ -110,7 +110,7 @@ public class BorrowBook {
 
         // Checking the borken is case by current student or privious student
         Book book = books.get(0);
-        Boolean isNewBroken = book.isBorken() || isBroken;
+        Boolean isNewBroken = book.isBroken() || isBroken;
 
 
         ListADT<Double> penaltyFees = new ListADT<>();
@@ -164,10 +164,10 @@ public class BorrowBook {
 
     public static void main(String arg[]){
         UserDataService userDataService = new UserDataService();
-        Testing.addTestUsers(userDataService);
+        SampleData.addTestUsers(userDataService);
 
         BookDataService bookDataService = new BookDataService();
-        Testing.addTestBooks(bookDataService);
+        SampleData.addTestBooks(bookDataService);
 
         BorrowBook borrowBook = new BorrowBook();
         boolean success = borrowBook.borrowBook(1, 1) && borrowBook.borrowBook(2, 1);

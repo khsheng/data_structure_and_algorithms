@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.function.*;
 import util.BookDisplay;
 import util.DisplayTableAction;
-import util.Testing;
+import util.SampleData;
 
 public class BookDataService implements CrudService<Book> {
     public static ListADT<Book> bookList = new ListADT<>();
@@ -131,10 +131,10 @@ public class BookDataService implements CrudService<Book> {
 
     public static void main(String[] args) {
         BookDataService bookDataService = new BookDataService();
-        Testing.addTestBooks(bookDataService);
+        SampleData.addTestBooks(bookDataService);
 
         UserDataService userDataService = new UserDataService();
-        Testing.addTestUsers(userDataService);
+        SampleData.addTestUsers(userDataService);
 
         DisplayTableAction<Book> displayTable = new BookDisplay(bookDataService.search(b -> true));
         displayTable.displayTable();
