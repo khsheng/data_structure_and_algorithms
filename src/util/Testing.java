@@ -194,6 +194,7 @@ public class Testing {
         bookDataService.add(new Book("The Fifth Gallery", "Simon Leclerc", 18.15, "Art"));
         bookDataService.add(new Book("Starlit Archivum", "Ophelia Grant", 21.90, "Fantasy"));
 
+
         // Print out the service contents
         System.out.println(bookDataService);
     }

@@ -88,8 +88,8 @@ public class BookDisplay extends DisplayTableAction<Book>{
         switch (option) {
             case "1": // ID
                 System.out.print("Enter ID: ");
-                int id = Integer.parseInt(scanner.nextLine());
-                return book -> book.getId() == id;
+                String idKeyword = scanner.nextLine();
+                return book -> String.valueOf(book.getId()).contains(idKeyword);
 
             case "2": // Title
                 System.out.print("Enter Title keyword: ");
@@ -114,30 +114,31 @@ public class BookDisplay extends DisplayTableAction<Book>{
                 return book -> book.getPrice() >= min && book.getPrice() <= max;
 
             case "6": // Borrowed status
-                System.out.print("Search borrowed books? (true/false): ");
-                boolean borrowed = Boolean.parseBoolean(scanner.nextLine());
-                return book -> book.isBorrowed() == borrowed;
+                System.out.print("Search borrowed books?: ");
+                String borrowedKeyword = scanner.nextLine();
+            return book -> String.valueOf(book.isBorrowed()).contains(borrowedKeyword);
 
             case "7": // Borrowed By
                 System.out.print("Enter borrower name: ");
                 String borrower = scanner.nextLine();
                 return book -> book.getPersonInBorrowed() != null &&
-                            book.getPersonInBorrowed().getName().equalsIgnoreCase(borrower);
+                        book.getPersonInBorrowed().getName().toLowerCase().contains(borrower.toLowerCase());
 
             case "8": // Borrowed Date
                 System.out.print("Enter borrowed date (YYYY-MM-DD): ");
-                LocalDate date = LocalDate.parse(scanner.nextLine());
-                return book -> date.equals(book.getBorrowedDate());
+                String dateKeyword = scanner.nextLine();
+                return book -> book.getBorrowedDate() != null &&
+                        book.getBorrowedDate().toString().contains(dateKeyword);
 
             case "9": // Penalty Paid
                 System.out.print("Search penalty paid? (true/false): ");
-                boolean penalty = Boolean.parseBoolean(scanner.nextLine());
-                return book -> book.isPenaltyPayed() == penalty;
+                String penaltyKeyword = scanner.nextLine();
+                return book -> String.valueOf(book.isPenaltyPayed()).contains(penaltyKeyword);
 
             case "10": // Broken
-                System.out.print("Search broken books? (true/false): ");
-                boolean broken = Boolean.parseBoolean(scanner.nextLine());
-                return book -> book.isBorken() == broken;
+                System.out.print("Search broken books?: ");
+                String brokenKeyword = scanner.nextLine();
+                return book -> String.valueOf(book.isBorken()).contains(brokenKeyword);
 
             default:
                 System.out.println("Invalid option.");
