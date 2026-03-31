@@ -1,202 +1,306 @@
 package ADT;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
-/**
- *
- * @author KHOO HOU SHENG
- */
-public class ListADT<T> implements InterfaceADT<T>{
-    private T[] array;
-    private int numberOfElement = 0;
-    private static final int DEFAULT_CAPACITY = 8;
+public class ListADT<T> implements InterfaceADT<T> {
 
-    public ListADT(){
-        array = (T[]) new Object[DEFAULT_CAPACITY];
+    private class Node {
+        T data;
+        Node next;
+
+        Node(T data) {
+            this.data = data;
+        }
     }
 
+    private Node head;
+    private int size = 0;
+
+    // ================= ADD =================
     @Override
-    public void add(T element){
-        if (isArrayFull()){
-            increaseArraySize();
+    public void add(T element) {
+        Node newNode = new Node(element);
+
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
         }
 
-        array[numberOfElement] = element;
-        numberOfElement++;
+        size++;
     }
 
+    // ================= ADD AT INDEX =================
     @Override
-    public void add(int newIndex, T element){
-        // validate index for adding an element
-        if (newIndex < 0){
-            throw new IndexOutOfBoundsException(
-                "Invalid index: " + newIndex
-            );
-        }else if (newIndex > numberOfElement){
-            newIndex = numberOfElement;
+    public void add(int index, T element) {
+        if (index < 0) {
+            throw new IndexOutOfBoundsException("Invalid index: " + index);
         }
 
-        if (isArrayFull()){
-            increaseArraySize();
+        Node newNode = new Node(element);
+
+        if (index == 0) {
+            newNode.next = head;
+            head = newNode;
+        } else {
+            Node current = head;
+
+            for (int i = 0; i < index - 1 && current != null; i++) {
+                current = current.next;
+            }
+
+            if (current == null) {
+                add(element);
+                return;
+            }
+
+            newNode.next = current.next;
+            current.next = newNode;
         }
 
-        // Shift elements to the right
-        for (int index = numberOfElement - 1; index >= newIndex; index--){
-            array[index + 1] = array[index]; 
-        }
-
-        array[newIndex] = element;
-        numberOfElement++;
+        size++;
     }
 
+    // ================= GET =================
     @Override
-    public ListADT<T> copy() {
-        ListADT<T> newList = new ListADT<>();
-        for (int i = 0; i < len(); i++) {
-            newList.add(get(i));  // use public get() method
+    public T get(int index) {
+        inBoundsValidation(index, "get");
+
+        Node current = head;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
         }
-        return newList;
+
+        return current.data;
     }
 
-
+    // ================= REMOVE =================
     @Override
-    public void remove(int index){
+    public void remove(int index) {
         inBoundsValidation(index, "remove");
 
-        for (int i = index; i < numberOfElement; i++){
-            array[i] = array[i+1];
-        }
+        if (index == 0) {
+            head = head.next;
+        } else {
+            Node current = head;
 
-        array[numberOfElement -1] = null;
-        numberOfElement = numberOfElement - 1;
-    }
-
-    @Override
-    public void clear(){
-        for (int i = 0; i <= numberOfElement -1 ; i++){
-            array[i] = null;
-        }
-
-        numberOfElement = 0;
-    }
-
-    @Override
-    public void replace(int index, T element){
-        inBoundsValidation(index, "replace");
-        array[index] = element;
-    }
-
-    @Override
-    public String toString(){
-        if (numberOfElement == 0) return "[]";
-
-        StringBuilder newString = new StringBuilder();
-        newString.append("[");
-        for (int i = 0; i < numberOfElement; i++){
-            newString.append(array[i]);
-            if (i != numberOfElement - 1) newString.append(", ");
-        }
-
-        newString.append("]");
-        return newString.toString();
-    }
-
-    @Override
-    public T get(int index){
-        inBoundsValidation(index, "get");
-        return array[index];
-    }
-
-    @Override
-    public int find(T element){
-        for (int i = 0; i <= numberOfElement - 1; i++){
-            if (array[i].equals(element)){
-                return i;
+            for (int i = 0; i < index - 1; i++) {
+                current = current.next;
             }
+
+            current.next = current.next.next;
+        }
+
+        size--;
+    }
+
+    // ================= REPLACE =================
+    @Override
+    public void replace(int index, T element) {
+        inBoundsValidation(index, "replace");
+
+        Node current = head;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+        }
+
+        current.data = element;
+    }
+
+    // ================= CLEAR =================
+    @Override
+    public void clear() {
+        head = null;
+        size = 0;
+    }
+
+    // ================= LEN =================
+    @Override
+    public int len() {
+        return size;
+    }
+
+    // ================= FIND =================
+    @Override
+    public int find(T element) {
+        Node current = head;
+        int index = 0;
+
+        while (current != null) {
+            if (current.data.equals(element)) {
+                return index;
+            }
+            current = current.next;
+            index++;
         }
 
         return -1;
     }
 
+    // ================= FIND ALL =================
     @Override
-    public  ListADT<Integer> findAll(T element){
-        ListADT<Integer> indexList = new ListADT<>();
+    public ListADT<Integer> findAll(T element) {
+        ListADT<Integer> result = new ListADT<>();
 
-        for (int i = 0; i <= numberOfElement - 1; i++){
-            if (array[i].equals(element)){
-                indexList.add(i);
+        Node current = head;
+        int index = 0;
+
+        while (current != null) {
+            if (current.data.equals(element)) {
+                result.add(index);
             }
+            current = current.next;
+            index++;
         }
 
-        if (indexList.len() == 0) {
-            indexList.add(-1);
+        if (result.len() == 0) {
+            result.add(-1);
         }
 
-        return indexList;
+        return result;
     }
-
 
     @Override
     public ListADT<Integer> findAll(Predicate<T> condition) {
-        ListADT<Integer> indexList = new ListADT<>();
+        ListADT<Integer> result = new ListADT<>();
 
-        for (int i = 0; i < numberOfElement; i++) {
-            if (condition.test(array[i])) {
-                indexList.add(i);
+        Node current = head;
+        int index = 0;
+
+        while (current != null) {
+            if (condition.test(current.data)) {
+                result.add(index);
             }
+            current = current.next;
+            index++;
         }
 
-        if (indexList.len() == 0) {
-            indexList.add(-1);
+        if (result.len() == 0) {
+            result.add(-1);
         }
 
-        return indexList;
-    }
-    
-    @Override
-    public int len(){
-        return numberOfElement;
+        return result;
     }
 
+    // ================= SORT =================
     @Override
     public void sort(Comparator<T> comparator) {
-        T[] sortting_array = toArray();
-        Arrays.sort(sortting_array,  comparator);
-
-        array = sortting_array;
+        head = mergeSort(head, comparator);
     }
 
+    private Node mergeSort(Node head, Comparator<T> comparator) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        // split list into two halves
+        Node middle = getMiddle(head);
+        Node nextOfMiddle = middle.next;
+
+        middle.next = null;
+
+        Node left = mergeSort(head, comparator);
+        Node right = mergeSort(nextOfMiddle, comparator);
+
+        return merge(left, right, comparator);
+    }
+
+    private Node getMiddle(Node head) {
+        if (head == null) return head;
+
+        Node slow = head;
+        Node fast = head.next;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+
+    private Node merge(Node left, Node right, Comparator<T> comparator) {
+        Node dummy = new Node(null);
+        Node tail = dummy;
+
+        while (left != null && right != null) {
+            if (comparator.compare(left.data, right.data) <= 0) {
+                tail.next = left;
+                left = left.next;
+            } else {
+                tail.next = right;
+                right = right.next;
+            }
+            tail = tail.next;
+        }
+
+        if (left != null) tail.next = left;
+        if (right != null) tail.next = right;
+
+        return dummy.next;
+    }
+
+
+    // ================= TO ARRAY =================
     @Override
-    public T[] toArray(){
-        T[] newArray = (T[]) new Object[numberOfElement];
-        for (int i = 0; i < numberOfElement; i++){
-            newArray[i] = array[i];
+    public T[] toArray() {
+        T[] arr = (T[]) new Object[size];
+
+        Node current = head;
+        int i = 0;
+
+        while (current != null) {
+            arr[i++] = current.data;
+            current = current.next;
         }
 
-        return newArray;
+        return arr;
     }
 
-    private boolean isArrayFull(){
-        return numberOfElement == array.length;
-    }
+    // ================= COPY =================
+    @Override
+    public ListADT<T> copy() {
+        ListADT<T> newList = new ListADT<>();
+        Node current = head;
 
-    private void increaseArraySize(){
-        T[] oldArray = array;
-        array = (T[]) new Object[oldArray.length * 2];
-        for (int i = 0; i < oldArray.length; i++) {
-            array[i] = oldArray[i];
+        while (current != null) {
+            newList.add(current.data);
+            current = current.next;
         }
-    } 
 
-    private void inBoundsValidation(int index, String process){
-        if ((index >= numberOfElement) || (index < 0)) {
+        return newList;
+    }
+
+    // ================= UTIL =================
+    private void inBoundsValidation(int index, String process) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException(
-                "Index '" + index + "' not exist and invalide for " + process
+                "Index '" + index + "' not exist and invalid for " + process
             );
         }
     }
+
+    // ================= TO STRING =================
+    @Override
+    public String toString() {
+        if (head == null) return "[]";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        Node current = head;
+        while (current != null) {
+            sb.append(current.data);
+            if (current.next != null) sb.append(", ");
+            current = current.next;
+        }
+
+        sb.append("]");
+        return sb.toString();
+    }
 }
-
-

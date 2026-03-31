@@ -3,7 +3,6 @@ package util;
 import ADT.ListADT;
 import data_management.entity.Book;
 import data_management.service.BookDataService;
-import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.function.*;
 
@@ -188,11 +187,11 @@ public class BookDisplay extends DisplayTableAction<Book>{
 
     @Override
     public ListADT<Book> sort (Comparator<Book> comparator){
-        return dataService.sort(comparator);
+        return dataService.sort(displayList, comparator);
     }
     
     @Override
     public ListADT<Book> search (Predicate<Book> parameter){
-        return dataService.search(parameter);
+        return dataService.search(displayList, parameter);
     }
 }

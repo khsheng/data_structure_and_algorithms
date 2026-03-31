@@ -2,7 +2,6 @@ package data_management.service;
 
 import ADT.ListADT;
 import data_management.entity.*;
-
 import java.util.Comparator;
 import java.util.function.*;
 import util.BookDisplay;
@@ -51,9 +50,34 @@ public class BookDataService implements CrudService<Book> {
         return result;
     }
 
+    @Override
+    public ListADT<Book> search(ListADT<Book> list,Predicate<Book> parameters) {
+        ListADT<Book> copyList = list.copy();        
+        ListADT<Integer> matchedIndex = copyList.findAll(parameters);
+        ListADT<Book> result = new ListADT<>();
+
+   
+        if (matchedIndex.get(0) == -1){
+            return result;
+        }
+
+        for (int i = 0; i < matchedIndex.len(); i++) {
+            result.add(copyList.get(matchedIndex.get(i)));
+        }
+
+        return result;
+    }
+
     public ListADT<Book> sort(Comparator<Book> comparator) {
         bookList.sort(comparator);
         return bookList;
+    }
+
+    public ListADT<Book> sort(ListADT<Book> list, Comparator<Book> comparator) {
+        ListADT<Book> copyList = list.copy();
+
+        copyList.sort(comparator);
+        return copyList;
     }
 
     public boolean isAvailable(int bookID) {

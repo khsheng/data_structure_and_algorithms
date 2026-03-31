@@ -53,7 +53,7 @@ public class Main {
                         System.out.println("Login successful!");
                         System.out.println("Logged in as: " + user.getRole());
 
-                        menuHandler.start(user); // go to menu1
+                        menuHandler.start(user); // go to menu
                     } else {
                         System.out.println("Login failed.");
                     }
