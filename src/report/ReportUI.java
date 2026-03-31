@@ -22,9 +22,9 @@ public class ReportUI {
         while (true) {
             System.out.println("\n===== REPORT MENU =====");
             System.out.println("1. Summary");
-            System.out.println("2. Borrowed");
-            System.out.println("3. Available");
-            System.out.println("4. Compare (6 Months)");
+            System.out.println("2. Borrowed Book");
+            System.out.println("3. Available Book");
+            System.out.println("4. Monthly Book Borrowed");
             System.out.println("0. Exit");
 
             System.out.print("Select Option: ");

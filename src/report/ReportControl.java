@@ -13,6 +13,9 @@ import data_management.entity.Penalty;
 import data_management.service.BookDataService;
 import data_management.service.HistoryRecorder;
 import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 public class ReportControl {
 
@@ -108,32 +111,57 @@ public class ReportControl {
         ListADT<BookHistory> histories = HistoryRecorder.getAllBookHistories();
 
         int[] monthCount = new int[6];
-        LocalDate now = LocalDate.now();
+        YearMonth now = YearMonth.now();
 
         for (int i = 0; i < histories.len(); i++) {
 
             BookHistory h = histories.get(i);
-            int diff = now.getMonthValue() - h.getDate().getMonthValue();
+            YearMonth historyMonth = YearMonth.from(h.getDate());
+
+            int diff = (int) java.time.temporal.ChronoUnit.MONTHS.between(historyMonth, now);
 
             if (diff >= 0 && diff < 6) {
                 monthCount[diff]++;
             }
         }
 
-        System.out.println("\n===== 6 MONTH COMPARISON =====");
+        System.out.println("\n===== Monthly Book Borrowed (Last 6 Months) =====");
 
         for (int i = 5; i >= 0; i--) {
-            System.out.println((i) + " month(s) ago: " + monthCount[i]);
+            YearMonth targetMonth = now.minusMonths(i);
+
+            String monthName = targetMonth.getMonth()
+                    .getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+
+            System.out.println(monthName + ": " + monthCount[i]);
         }
 
-        // Rate calculation
-        System.out.println("\n===== RATE CHANGE =====");
+        
+        System.out.println("\n===== MONTH-TO-MONTH CHANGE =====");
 
         for (int i = 1; i < 6; i++) {
-            if (monthCount[i] == 0) continue;
 
-            double rate = ((monthCount[i - 1] - monthCount[i]) * 100.0) / monthCount[i];
-            System.out.println("Month " + (i - 1) + " vs " + i + ": " + rate + "%");
+            int newer = monthCount[i - 1];
+            int older = monthCount[i];
+
+            YearMonth m1 = now.minusMonths(i - 1);
+            YearMonth m2 = now.minusMonths(i);
+
+            String m1Name = m1.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
+            String m2Name = m2.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
+
+            if (older == 0) {
+                if (newer == 0) {
+                    System.out.println(m1Name + " vs " + m2Name + ": 0.00%");
+                } else {
+                    System.out.println(m1Name + " vs " + m2Name + ": ∞ (no data in previous month)");
+                }
+                continue;
+            }
+
+            double rate = ((newer - older) * 100.0) / older;
+
+            System.out.println(m1Name + " vs " + m2Name + ": " + String.format("%.2f", rate) + "%");
         }
     }
 }
