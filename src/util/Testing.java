@@ -6,6 +6,7 @@ import data_management.entity.Student;
 import data_management.entity.UserInfo;
 import data_management.service.BookDataService;
 import data_management.service.UserDataService;
+import data_management.service.BorrowBook;
 
 public class Testing {
     public static void addTestUsers(UserDataService userDataService) {
@@ -196,6 +197,34 @@ public class Testing {
 
         // Print out the service contents
         System.out.println(bookDataService);
+    }
+
+    public static void addTestBorrowedBooks(BookDataService bookDataService) {
+        BorrowBook borrowBookService = new BorrowBook();
+        
+        
+        borrowBookService.borrowBook(1, 1);   // Book 1 borrowed by Student 1
+        borrowBookService.borrowBook(2, 3);   // Book 2 borrowed by Student 3
+        borrowBookService.borrowBook(3, 5);   // Book 3 borrowed by Student 5
+        borrowBookService.borrowBook(4, 7);   // Book 4 borrowed by Student 7
+        borrowBookService.borrowBook(5, 9);   // Book 5 borrowed by Student 9
+        borrowBookService.borrowBook(6, 11);  // Book 6 borrowed by Student 11
+        borrowBookService.borrowBook(7, 12);  // Book 7 borrowed by Student 12
+        borrowBookService.borrowBook(8, 13);  // Book 8 borrowed by Student 13
+        borrowBookService.borrowBook(9, 14);  // Book 9 borrowed by Student 14
+        borrowBookService.borrowBook(10, 15); // Book 10 borrowed by Student 15
+        borrowBookService.borrowBook(11, 16); // Book 11 borrowed by Student 16
+        borrowBookService.borrowBook(12, 17); // Book 12 borrowed by Student 17
+        borrowBookService.borrowBook(13, 18); // Book 13 borrowed by Student 18
+        borrowBookService.borrowBook(14, 19); // Book 14 borrowed by Student 19
+        borrowBookService.borrowBook(15, 20); // Book 15 borrowed by Student 20
+        borrowBookService.borrowBook(16, 21); // Book 16 borrowed by Student 21
+        borrowBookService.borrowBook(17, 22); // Book 17 borrowed by Student 22
+        borrowBookService.borrowBook(18, 23); // Book 18 borrowed by Student 23
+        borrowBookService.borrowBook(19, 24); // Book 19 borrowed by Student 24
+        borrowBookService.borrowBook(20, 25); // Book 20 borrowed by Student 25
+        
+        System.out.println("✓ 20 students have borrowed books");
     }
 
     public static void main(String[] args) {

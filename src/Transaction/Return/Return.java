@@ -70,6 +70,43 @@ public class Return {
     }
 
     /**
+     * Return book as student - no need to ask for ID, already logged in
+     * Shows borrowed books and asks for book ID only
+     * @param studentID The ID of the logged-in student
+     * @return A ReturnResult object containing success status and detailed message
+     */
+    public ReturnResult returnBookAsStudent(int studentID) {
+        // Step 1: Verify student exists
+        ListADT<UserInfo> users = userDataService.search(user -> user.getId() == studentID);
+        if (users.len() != 1) {
+            return new ReturnResult(false, "Error: User with ID " + studentID + " does not exist.");
+        }
+
+        // Step 2: Verify user is a student
+        if (!(users.get(0) instanceof Student)) {
+            return new ReturnResult(false, "Error: User with ID " + studentID + " is not a student.");
+        }
+        Student student = (Student) users.get(0);
+
+        // Step 3: Get borrowed books for this student
+        ListADT<Book> borrowedBooks = student.getBorrowedBooks();
+        if (borrowedBooks.len() == 0) {
+            return new ReturnResult(false, "Error: Student " + student.getName() + " has no borrowed books.");
+        }
+
+        // Step 4: Display borrowed books
+        System.out.println("\n--- Your Borrowed Books ---");
+        displayBorrowedBooks(borrowedBooks);
+
+        // Step 5: Get Book ID to return
+        System.out.print("\nEnter Book ID to return: ");
+        int bookID = getIntInput();
+
+        // Step 6: Call the main returnBook method
+        return returnBook(bookID, studentID);
+    }
+
+    /**
      * Display borrowed books for a student
      * @param borrowedBooks List of books borrowed by the student
      */

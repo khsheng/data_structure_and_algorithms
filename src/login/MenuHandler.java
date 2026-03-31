@@ -5,6 +5,8 @@ import data_management.entity.*;
 import data_management.service.UserDataService;
 import util.*;
 import ADT.ListADT;
+import Transaction.Borrow.Borrow;
+import Transaction.TransactionMenu;
 
 public class MenuHandler {
 
@@ -29,9 +31,8 @@ public class MenuHandler {
 
         do {
             System.out.println("\n--- Student Menu ---");
-            System.out.println("1. View Info");
-            System.out.println("2. Update Info");
-            System.out.println("3. Delete Account");
+            System.out.println("1. Borrow Book");
+            System.out.println("2. User Management");
             System.out.println("0. Exit");
 
             System.out.print("Select Option: ");
@@ -40,18 +41,12 @@ public class MenuHandler {
 
             switch (choice) {
                 case 1:
-                System.out.println("\n=== YOUR INFORMATION ===");
-                displaySingleUser(student);
-                break;
+                    new TransactionMenu(sc).startForStudent(student.getId());
+                    break;
 
                 case 2:
                     updateStudentInfo(student);
                     break;
-
-                case 3:
-                    deleteUser(student.getId());
-                    System.out.println("Account deleted.");
-                    return;
             }
 
         } while (choice != 0);
@@ -67,6 +62,7 @@ public class MenuHandler {
             System.out.println("2. Edit Student Info");
             System.out.println("3. Update Own Info");
             System.out.println("4. Create Staff");
+            System.out.println("5. Book Management");
             System.out.println("0. Exit");
 
             System.out.print("Select Option: ");
@@ -89,12 +85,17 @@ public class MenuHandler {
                 case 4:
                     createStaff();
                     break;
+
+                case 5:
+                    new TransactionMenu(sc).start();
+                    break;
             }
 
         } while (choice != 0);
     }
 
     // ================= COMMON FUNCTIONS =================
+
 
     private void updateUser(int id, java.util.function.Consumer<data_management.entity.UserInfo> action) {
 
@@ -166,6 +167,8 @@ public class MenuHandler {
 
         System.out.println("Staff created successfully.");
 }
+
+
 
     private void updateStudentInfo(Student student) {
 
@@ -359,7 +362,7 @@ public void registerStudent(Scanner sc) {
     System.out.print("Username: ");
     String userName = sc.nextLine();
 
-    // 🔥 CHECK DUPLICATE USERNAME
+    
     ListADT<UserInfo> exist =
         userService.search(u -> u.getUserName().equalsIgnoreCase(userName));
 
