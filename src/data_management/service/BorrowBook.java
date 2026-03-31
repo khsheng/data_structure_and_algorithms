@@ -84,7 +84,6 @@ public class BorrowBook {
         HistoryRecorder.recordPenalty("Late Return", lateOfReturnPenalty, LocalDate.now());
         if (isNewBroken) {
             book.setBroken(isBroken);
-            System.out.println(book.isBorken());
             HistoryRecorder.recordPenalty("Broken Book", brokenBookPenalty, LocalDate.now());
         }
 

@@ -1,12 +1,11 @@
 package login;
 
-import java.util.Scanner;
+import ADT.ListADT;
+import Transaction.TransactionMenu;
 import data_management.entity.*;
 import data_management.service.UserDataService;
+import java.util.Scanner;
 import util.*;
-import ADT.ListADT;
-import Transaction.Borrow.Borrow;
-import Transaction.TransactionMenu;
 
 public class MenuHandler {
 
@@ -31,7 +30,7 @@ public class MenuHandler {
 
         do {
             System.out.println("\n--- Student Menu ---");
-            System.out.println("1. Borrow Book");
+            System.out.println("1. Book Service");
             System.out.println("2. User Management");
             System.out.println("0. Exit");
 

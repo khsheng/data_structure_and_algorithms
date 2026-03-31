@@ -2,7 +2,6 @@ package data_management.service;
 
 import ADT.ListADT;
 import data_management.entity.*;
-// import data_management.entity.Penalty;
 import java.time.LocalDate;
 
 public class HistoryRecorder {
@@ -27,6 +26,23 @@ public class HistoryRecorder {
 
     public static ListADT<BookHistory> getAllBookHistories() {
         return bookHistoryList;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("=== Penalty Records ===\n");
+        for (int i = 0; i < penaltyList.len(); i++) {
+            sb.append(penaltyList.get(i)).append("\n");
+        }
+
+        sb.append("\n=== Book History Records ===\n");
+        for (int i = 0; i < bookHistoryList.len(); i++) {
+            sb.append(bookHistoryList.get(i)).append("\n");
+        }
+
+        return sb.toString();
     }
 
     public static void main(String[] args) {
