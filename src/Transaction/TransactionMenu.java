@@ -76,9 +76,9 @@ public class TransactionMenu {
     }
 
     private void borrowBookAsStudent(int studentID) {
-        ListADT<Book> allBooks = bookDataService.search(book -> true);
+        ListADT<Book> availableBooks = bookDataService.search(book -> !book.isBorrowed());
         BookListPagination pagination = new BookListPagination(scanner);
-        pagination.displayBooksWithPagination(allBooks);
+        pagination.displayBooksWithPagination(availableBooks);
         
         System.out.print("Enter Book ID: ");
         int bookID = getIntInput();
@@ -193,8 +193,8 @@ public class TransactionMenu {
     }
 
     private void printBorrowMenu() {
-        ListADT<Book> allBooks = bookDataService.search(book -> true);
-        bookListPagination.displayBooksWithPagination(allBooks);
+        ListADT<Book> availableBooks = bookDataService.search(book -> !book.isBorrowed());
+        bookListPagination.displayBooksWithPagination(availableBooks);
         System.out.println("\n--- Borrow Menu ---");
         System.out.println("1. Borrow Book");
         System.out.println("0. Back to Main Menu");
