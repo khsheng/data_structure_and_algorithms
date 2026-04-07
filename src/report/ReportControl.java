@@ -12,7 +12,6 @@ import data_management.entity.BookHistory;
 import data_management.entity.Penalty;
 import data_management.service.BookDataService;
 import data_management.service.HistoryRecorder;
-import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.TextStyle;
 import java.util.Locale;
@@ -75,10 +74,10 @@ public class ReportControl {
         System.out.println("\n===== SUMMARY =====");
         System.out.println("Borrowed: " + borrowedCount);
         System.out.println("Available: " + available);
-        System.out.println("Late Penalty: RM " + latePenalty);
-        System.out.println("Broken Penalty: RM " + brokenPenalty);
-        System.out.println("Late Rate: " + lateRate + "%");
-        System.out.println("Broken Rate: " + brokenRate + "%");
+        System.out.printf("Late Penalty: RM %.2f\n", latePenalty);
+        System.out.printf("Broken Penalty: RM %.2f\n", brokenPenalty);
+        System.out.printf("Late Rate: %.2f%%\n", lateRate);
+        System.out.printf("Broken Rate: %.2f%%\n", brokenRate);
     }
 
     // ================================
@@ -127,7 +126,7 @@ public class ReportControl {
 
         System.out.println("\n===== Monthly Book Borrowed (Last 6 Months) =====");
 
-        for (int i = 5; i >= 0; i--) {
+        for (int i = 0; i < 6; i++) {
             YearMonth targetMonth = now.minusMonths(i);
 
             String monthName = targetMonth.getMonth()
