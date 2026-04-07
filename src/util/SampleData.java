@@ -1,12 +1,15 @@
 package util;
 
 import data_management.entity.Book;
+import data_management.entity.BookHistory;
 import data_management.entity.Staff;
 import data_management.entity.Student;
 import data_management.entity.UserInfo;
 import data_management.service.BookDataService;
 import data_management.service.BorrowBook;
+import data_management.service.HistoryRecorder;
 import data_management.service.UserDataService;
+import java.time.LocalDate;
 
 public class SampleData {
     public static void addTestUsers(UserDataService userDataService) {
@@ -135,29 +138,29 @@ public class SampleData {
         bookDataService.add(new Book("Pride and Prejudice", "Jane Austen", 7.99, "Romance"));
         bookDataService.add(new Book("Moby-Dick", "Herman Melville", 11.50, "Adventure"));
         bookDataService.add(new Book("The Catcher in the Rye", "J.D. Salinger", 8.50, "Fiction"));
-        bookDataService.add(new Book("Brave New World", "Aldous Huxley", 9.50, "Science Fiction"));
+        bookDataService.add(new Book("Brave New World", "Aldous Huxley", 9.50, "Science"));
         bookDataService.add(new Book("The Hobbit", "J.R.R. Tolkien", 12.99, "Fantasy"));
         bookDataService.add(new Book("Crime and Punishment", "Fyodor Dostoevsky", 10.50, "Classic"));
         bookDataService.add(new Book("War and Peace", "Leo Tolstoy", 14.99, "Historical"));
-        bookDataService.add(new Book("The Silent Observatory", "Maeve Callahan", 14.99, "Science Fiction"));
+        bookDataService.add(new Book("The Silent Observatory", "Maeve Callahan", 14.99, "Science"));
         bookDataService.add(new Book("Clockwork Isles", "Rafael Bennett", 18.50, "Fantasy"));
         bookDataService.add(new Book("Harbor of Glass", "Ivy Moreau", 12.75, "Mystery"));
         bookDataService.add(new Book("Algorithm of Dreams", "Noah Carpenter", 21.00, "Technology"));
         bookDataService.add(new Book("Letters to Tomorrow", "Sienna Duarte", 16.25, "Fiction"));
         bookDataService.add(new Book("Midnight Botanist", "Leo Chambers", 11.99, "Fantasy"));
         bookDataService.add(new Book("Atlas of Broken Maps", "Amir Solano", 19.45, "Adventure"));
-        bookDataService.add(new Book("Velvet Rebellion", "Tessa Calder", 13.10, "Historical Fiction"));
+        bookDataService.add(new Book("Velvet Rebellion", "Tessa Calder", 13.10, "Historical"));
         bookDataService.add(new Book("The Painted Oath", "Jules Mercer", 15.80, "Romance"));
         bookDataService.add(new Book("Cathedral of Fog", "Harper Lin", 17.95, "Horror"));
-        bookDataService.add(new Book("Cobalt Paradox", "Xavier Holt", 22.40, "Science Fiction"));
+        bookDataService.add(new Book("Cobalt Paradox", "Xavier Holt", 22.40, "Science"));
         bookDataService.add(new Book("The Last Orchard", "Mara Ellison", 10.75, "Drama"));
         bookDataService.add(new Book("Frequency Keepers", "Caleb Ortiz", 18.20, "Thriller"));
         bookDataService.add(new Book("Embers on Water", "Lucia Navarro", 14.60, "Poetry"));
         bookDataService.add(new Book("The Sapphire Cartographer", "Elias Porter", 23.15, "Fantasy"));
         bookDataService.add(new Book("Neon Harvest", "Aria Patel", 13.50, "Dystopian"));
-        bookDataService.add(new Book("Marble Republic", "Dorian Vega", 24.80, "Political Fiction"));
+        bookDataService.add(new Book("Marble Republic", "Dorian Vega", 24.80, "Political"));
         bookDataService.add(new Book("The Paper Helmsman", "Isla Monroe", 12.30, "Children"));
-        bookDataService.add(new Book("Gravity's Orphans", "Holden Briggs", 20.99, "Science Fiction"));
+        bookDataService.add(new Book("Gravity's Orphans", "Holden Briggs", 20.99, "Science"));
         bookDataService.add(new Book("The Lantern Villas", "Penelope Shaw", 11.45, "Mystery"));
         bookDataService.add(new Book("Spiral of Sand", "Gwen Rivera", 16.75, "Adventure"));
         bookDataService.add(new Book("Firefly Diplomats", "Owen Caldwell", 19.30, "Fantasy"));
@@ -165,14 +168,14 @@ public class SampleData {
         bookDataService.add(new Book("Patchwork Constellations", "Elliot Ramsey", 12.85, "Romance"));
         bookDataService.add(new Book("Signal at Dawn", "Theo Kline", 15.20, "Thriller"));
         bookDataService.add(new Book("The Hollow Conservatory", "Nadia Winters", 18.95, "Gothic"));
-        bookDataService.add(new Book("Rivers Without Names", "Emerson Pike", 13.40, "Literary Fiction"));
-        bookDataService.add(new Book("Stone & Starship", "Remy Laurent", 22.10, "Science Fiction"));
+        bookDataService.add(new Book("Rivers Without Names", "Emerson Pike", 13.40, "Literary"));
+        bookDataService.add(new Book("Stone & Starship", "Remy Laurent", 22.10, "Science"));
         bookDataService.add(new Book("The Clockmaker's Niece", "Brielle Sutton", 11.60, "Steampunk"));
         bookDataService.add(new Book("Harvest of Comets", "Kiran Desai", 24.25, "Space Opera"));
         bookDataService.add(new Book("Inkbound Pilgrims", "Talia Rios", 14.05, "Fantasy"));
         bookDataService.add(new Book("The Coral Citadel", "Jasper Flynn", 12.95, "Adventure"));
         bookDataService.add(new Book("Echoes in Amber", "Rowan Calder", 19.10, "Mystery"));
-        bookDataService.add(new Book("Cartwheels on Orion", "Mikayla Frost", 21.35, "Science Fiction"));
+        bookDataService.add(new Book("Cartwheels on Orion", "Mikayla Frost", 21.35, "Science"));
         bookDataService.add(new Book("The Umbrella Archivist", "Silas Becker", 13.25, "Fiction"));
         bookDataService.add(new Book("Citizens of Rust", "Valerie Kade", 16.95, "Dystopian"));
         bookDataService.add(new Book("The Orchard Astronomer", "Daphne Quinn", 15.60, "Middle Grade"));
@@ -180,11 +183,11 @@ public class SampleData {
         bookDataService.add(new Book("The Glass Desert Train", "Wren Atherton", 18.55, "Adventure"));
         bookDataService.add(new Book("Chasing Northlights", "Elena Morozov", 17.75, "Travel"));
         bookDataService.add(new Book("Lanternwork Guild", "Quincy Hale", 13.95, "Fantasy"));
-        bookDataService.add(new Book("Threads of Meridian", "Sabine Adler", 22.75, "Historical Fantasy"));
+        bookDataService.add(new Book("Threads of Meridian", "Sabine Adler", 22.75, "Historical"));
         bookDataService.add(new Book("Pixel Saints", "Bryce Holloway", 12.10, "Cyberpunk"));
         bookDataService.add(new Book("The Borrowed Lighthouse", "Natalie Comer", 16.45, "Drama"));
         bookDataService.add(new Book("Oracle of the Salt Road", "Priya Nader", 19.70, "Mythology"));
-        bookDataService.add(new Book("The Velvet Physicist", "Anders Kim", 23.90, "Science Fiction"));
+        bookDataService.add(new Book("The Velvet Physicist", "Anders Kim", 23.90, "Science"));
         bookDataService.add(new Book("Canyons of Paper", "Helena Brooks", 14.30, "Essay"));
         bookDataService.add(new Book("Moonlit Apiary", "Farah Idris", 12.65, "Nature"));
         bookDataService.add(new Book("The Fifth Gallery", "Simon Leclerc", 18.15, "Art"));
@@ -217,6 +220,139 @@ public class SampleData {
         borrowBookService.borrowBook(19, 24); // Book 19 borrowed by Student 24
         borrowBookService.borrowBook(20, 25); // Book 20 borrowed by Student 25
 
+    }
+
+        public static void addTestHistoryData(){
+        // ================= NOV 2025 =================
+        HistoryRecorder.recordBookAction(1, 1, BookHistory.TransactionType.BORROW, LocalDate.of(2025,11,3));
+        HistoryRecorder.recordBookAction(2, 2, BookHistory.TransactionType.RETURN, LocalDate.of(2025,11,5));
+        HistoryRecorder.recordBookAction(3, 3, BookHistory.TransactionType.BORROW, LocalDate.of(2025,11,7));
+        HistoryRecorder.recordBookAction(4, 4, BookHistory.TransactionType.BORROW, LocalDate.of(2025,11,10));
+        HistoryRecorder.recordBookAction(5, 5, BookHistory.TransactionType.RETURN, LocalDate.of(2025,11,12));
+        HistoryRecorder.recordBookAction(6, 6, BookHistory.TransactionType.BORROW, LocalDate.of(2025,11,14));
+        HistoryRecorder.recordBookAction(7, 7, BookHistory.TransactionType.BORROW, LocalDate.of(2025,11,16));
+        HistoryRecorder.recordBookAction(8, 8, BookHistory.TransactionType.RETURN, LocalDate.of(2025,11,18));
+        HistoryRecorder.recordBookAction(9, 9, BookHistory.TransactionType.BORROW, LocalDate.of(2025,11,20));
+        HistoryRecorder.recordBookAction(10, 10, BookHistory.TransactionType.BORROW, LocalDate.of(2025,11,22));
+        HistoryRecorder.recordBookAction(11, 11, BookHistory.TransactionType.RETURN, LocalDate.of(2025,11,24));
+        HistoryRecorder.recordBookAction(12, 12, BookHistory.TransactionType.BORROW, LocalDate.of(2025,11,26));
+        HistoryRecorder.recordBookAction(13, 13, BookHistory.TransactionType.BORROW, LocalDate.of(2025,11,28));
+        HistoryRecorder.recordBookAction(14, 14, BookHistory.TransactionType.RETURN, LocalDate.of(2025,11,30));
+        HistoryRecorder.recordBookAction(15, 15, BookHistory.TransactionType.BORROW, LocalDate.of(2025,11,2));
+        HistoryRecorder.recordBookAction(16, 16, BookHistory.TransactionType.BORROW, LocalDate.of(2025,11,6));
+        HistoryRecorder.recordBookAction(17, 17, BookHistory.TransactionType.RETURN, LocalDate.of(2025,11,8));
+
+        // ================= DEC 2025 =================
+        HistoryRecorder.recordBookAction(18, 18, BookHistory.TransactionType.BORROW, LocalDate.of(2025,12,1));
+        HistoryRecorder.recordBookAction(19, 19, BookHistory.TransactionType.BORROW, LocalDate.of(2025,12,3));
+        HistoryRecorder.recordBookAction(20, 20, BookHistory.TransactionType.RETURN, LocalDate.of(2025,12,5));
+        HistoryRecorder.recordBookAction(21, 21, BookHistory.TransactionType.BORROW, LocalDate.of(2025,12,7));
+        HistoryRecorder.recordBookAction(22, 22, BookHistory.TransactionType.BORROW, LocalDate.of(2025,12,9));
+        HistoryRecorder.recordBookAction(23, 23, BookHistory.TransactionType.RETURN, LocalDate.of(2025,12,11));
+        HistoryRecorder.recordBookAction(24, 24, BookHistory.TransactionType.BORROW, LocalDate.of(2025,12,13));
+        HistoryRecorder.recordBookAction(25, 25, BookHistory.TransactionType.BORROW, LocalDate.of(2025,12,15));
+        HistoryRecorder.recordBookAction(26, 26, BookHistory.TransactionType.RETURN, LocalDate.of(2025,12,17));
+        HistoryRecorder.recordBookAction(27, 27, BookHistory.TransactionType.BORROW, LocalDate.of(2025,12,19));
+        HistoryRecorder.recordBookAction(28, 28, BookHistory.TransactionType.BORROW, LocalDate.of(2025,12,21));
+        HistoryRecorder.recordBookAction(29, 29, BookHistory.TransactionType.RETURN, LocalDate.of(2025,12,23));
+        HistoryRecorder.recordBookAction(30, 30, BookHistory.TransactionType.BORROW, LocalDate.of(2025,12,25));
+        HistoryRecorder.recordBookAction(31, 31, BookHistory.TransactionType.BORROW, LocalDate.of(2025,12,27));
+        HistoryRecorder.recordBookAction(32, 32, BookHistory.TransactionType.RETURN, LocalDate.of(2025,12,29));
+        HistoryRecorder.recordBookAction(33, 33, BookHistory.TransactionType.BORROW, LocalDate.of(2025,12,31));
+
+        // ================= JAN 2026 =================
+        HistoryRecorder.recordBookAction(34, 34, BookHistory.TransactionType.BORROW, LocalDate.of(2026,1,2));
+        HistoryRecorder.recordBookAction(35, 35, BookHistory.TransactionType.RETURN, LocalDate.of(2026,1,4));
+        HistoryRecorder.recordBookAction(36, 36, BookHistory.TransactionType.BORROW, LocalDate.of(2026,1,6));
+        HistoryRecorder.recordBookAction(37, 37, BookHistory.TransactionType.BORROW, LocalDate.of(2026,1,8));
+        HistoryRecorder.recordBookAction(38, 38, BookHistory.TransactionType.RETURN, LocalDate.of(2026,1,10));
+        HistoryRecorder.recordBookAction(39, 39, BookHistory.TransactionType.BORROW, LocalDate.of(2026,1,12));
+        HistoryRecorder.recordBookAction(40, 40, BookHistory.TransactionType.BORROW, LocalDate.of(2026,1,14));
+        HistoryRecorder.recordBookAction(41, 41, BookHistory.TransactionType.RETURN, LocalDate.of(2026,1,16));
+        HistoryRecorder.recordBookAction(42, 42, BookHistory.TransactionType.BORROW, LocalDate.of(2026,1,18));
+        HistoryRecorder.recordBookAction(43, 43, BookHistory.TransactionType.BORROW, LocalDate.of(2026,1,20));
+        HistoryRecorder.recordBookAction(44, 44, BookHistory.TransactionType.RETURN, LocalDate.of(2026,1,22));
+        HistoryRecorder.recordBookAction(45, 45, BookHistory.TransactionType.BORROW, LocalDate.of(2026,1,24));
+        HistoryRecorder.recordBookAction(46, 46, BookHistory.TransactionType.BORROW, LocalDate.of(2026,1,26));
+        HistoryRecorder.recordBookAction(47, 47, BookHistory.TransactionType.RETURN, LocalDate.of(2026,1,28));
+        HistoryRecorder.recordBookAction(48, 48, BookHistory.TransactionType.BORROW, LocalDate.of(2026,1,30));
+
+        // ================= FEB 2026 =================
+        HistoryRecorder.recordBookAction(49, 49, BookHistory.TransactionType.BORROW, LocalDate.of(2026,2,2));
+        HistoryRecorder.recordBookAction(50, 50, BookHistory.TransactionType.RETURN, LocalDate.of(2026,2,4));
+        HistoryRecorder.recordBookAction(51, 1, BookHistory.TransactionType.BORROW, LocalDate.of(2026,2,6));
+        HistoryRecorder.recordBookAction(52, 2, BookHistory.TransactionType.BORROW, LocalDate.of(2026,2,8));
+        HistoryRecorder.recordBookAction(53, 3, BookHistory.TransactionType.RETURN, LocalDate.of(2026,2,10));
+        HistoryRecorder.recordBookAction(54, 4, BookHistory.TransactionType.BORROW, LocalDate.of(2026,2,12));
+        HistoryRecorder.recordBookAction(55, 5, BookHistory.TransactionType.BORROW, LocalDate.of(2026,2,14));
+        HistoryRecorder.recordBookAction(56, 6, BookHistory.TransactionType.RETURN, LocalDate.of(2026,2,16));
+        HistoryRecorder.recordBookAction(57, 7, BookHistory.TransactionType.BORROW, LocalDate.of(2026,2,18));
+        HistoryRecorder.recordBookAction(58, 8, BookHistory.TransactionType.BORROW, LocalDate.of(2026,2,20));
+        HistoryRecorder.recordBookAction(59, 9, BookHistory.TransactionType.RETURN, LocalDate.of(2026,2,22));
+        HistoryRecorder.recordBookAction(60, 10, BookHistory.TransactionType.BORROW, LocalDate.of(2026,2,24));        HistoryRecorder.recordBookAction(16, 26, BookHistory.TransactionType.BORROW, LocalDate.of(2026,4,1));
+        HistoryRecorder.recordBookAction(17, 27, BookHistory.TransactionType.RETURN, LocalDate.of(2026,2,3));
+        HistoryRecorder.recordBookAction(18, 28, BookHistory.TransactionType.BORROW, LocalDate.of(2026,2,5));
+        HistoryRecorder.recordBookAction(19, 29, BookHistory.TransactionType.BORROW, LocalDate.of(2026,2,7));
+        HistoryRecorder.recordBookAction(20, 30, BookHistory.TransactionType.RETURN, LocalDate.of(2026,2,9));
+
+        // ================= MAR 2026 =================
+        HistoryRecorder.recordBookAction(1, 11, BookHistory.TransactionType.BORROW, LocalDate.of(2026,3,1));
+        HistoryRecorder.recordBookAction(2, 12, BookHistory.TransactionType.RETURN, LocalDate.of(2026,3,3));
+        HistoryRecorder.recordBookAction(3, 13, BookHistory.TransactionType.BORROW, LocalDate.of(2026,3,5));
+        HistoryRecorder.recordBookAction(4, 14, BookHistory.TransactionType.BORROW, LocalDate.of(2026,3,7));
+        HistoryRecorder.recordBookAction(5, 15, BookHistory.TransactionType.RETURN, LocalDate.of(2026,3,9));
+        HistoryRecorder.recordBookAction(6, 16, BookHistory.TransactionType.BORROW, LocalDate.of(2026,3,11));
+        HistoryRecorder.recordBookAction(7, 17, BookHistory.TransactionType.BORROW, LocalDate.of(2026,3,13));
+        HistoryRecorder.recordBookAction(8, 18, BookHistory.TransactionType.RETURN, LocalDate.of(2026,3,15));
+        HistoryRecorder.recordBookAction(9, 19, BookHistory.TransactionType.BORROW, LocalDate.of(2026,3,17));
+        HistoryRecorder.recordBookAction(10, 20, BookHistory.TransactionType.BORROW, LocalDate.of(2026,3,19));
+        HistoryRecorder.recordBookAction(11, 21, BookHistory.TransactionType.RETURN, LocalDate.of(2026,3,21));
+        HistoryRecorder.recordBookAction(12, 22, BookHistory.TransactionType.BORROW, LocalDate.of(2026,3,23));
+        HistoryRecorder.recordBookAction(13, 23, BookHistory.TransactionType.BORROW, LocalDate.of(2026,3,25));
+        HistoryRecorder.recordBookAction(14, 24, BookHistory.TransactionType.RETURN, LocalDate.of(2026,3,27));
+        HistoryRecorder.recordBookAction(15, 25, BookHistory.TransactionType.BORROW, LocalDate.of(2026,3,29));
+
+        // ================= APR 2026 =================
+        HistoryRecorder.recordBookAction(24, 34, BookHistory.TransactionType.BORROW, LocalDate.of(2026,4,17));
+        HistoryRecorder.recordBookAction(25, 35, BookHistory.TransactionType.BORROW, LocalDate.of(2026,4,19));
+        HistoryRecorder.recordBookAction(26, 36, BookHistory.TransactionType.RETURN, LocalDate.of(2026,4,21));
+        HistoryRecorder.recordBookAction(27, 37, BookHistory.TransactionType.BORROW, LocalDate.of(2026,4,23));
+        HistoryRecorder.recordBookAction(28, 38, BookHistory.TransactionType.BORROW, LocalDate.of(2026,4,25));
+        HistoryRecorder.recordBookAction(29, 39, BookHistory.TransactionType.RETURN, LocalDate.of(2026,4,27));
+        HistoryRecorder.recordBookAction(30, 40, BookHistory.TransactionType.BORROW, LocalDate.of(2026,4,29));
+    }
+
+    public static void addTestPenaltiesRecord() {
+        // ===== NOV 2025 =====
+        HistoryRecorder.recordPenalty("Late Return", 3.00, LocalDate.of(2025,11,12));
+        HistoryRecorder.recordPenalty("Late Return", 5.00, LocalDate.of(2025,11,18));
+        HistoryRecorder.recordPenalty("Broken Book", 20.00, LocalDate.of(2025,11,22));
+
+        // ===== DEC 2025 =====
+        HistoryRecorder.recordPenalty("Late Return", 4.00, LocalDate.of(2025,12,9));
+        HistoryRecorder.recordPenalty("Late Return", 6.00, LocalDate.of(2025,12,17));
+        HistoryRecorder.recordPenalty("Late Return", 2.00, LocalDate.of(2025,12,23));
+        HistoryRecorder.recordPenalty("Broken Book", 20.00, LocalDate.of(2025,12,25));
+
+        // ===== JAN 2026 =====
+        HistoryRecorder.recordPenalty("Late Return", 7.00, LocalDate.of(2026,1,10));
+        HistoryRecorder.recordPenalty("Late Return", 3.00, LocalDate.of(2026,1,16));
+
+
+        // ===== FEB 2026 =====
+        HistoryRecorder.recordPenalty("Late Return", 2.00, LocalDate.of(2026,2,8));
+        HistoryRecorder.recordPenalty("Late Return", 4.00, LocalDate.of(2026,2,22));
+        HistoryRecorder.recordPenalty("Broken Book", 20.00, LocalDate.of(2026,2,24));
+
+        // ===== MAR 2026 =====
+        HistoryRecorder.recordPenalty("Late Return", 5.00, LocalDate.of(2026,3,9));
+        HistoryRecorder.recordPenalty("Late Return", 3.00, LocalDate.of(2026,3,15));
+        HistoryRecorder.recordPenalty("Late Return", 6.00, LocalDate.of(2026,3,21));
+        HistoryRecorder.recordPenalty("Broken Book", 20.00, LocalDate.of(2026,3,25));
+
+        // ===== APR 2026 =====
+        HistoryRecorder.recordPenalty("Late Return", 4.00, LocalDate.of(2026,4,7));
+        HistoryRecorder.recordPenalty("Broken Book", 20.00, LocalDate.of(2026,4,23));
     }
 
     public static void main(String[] args) {

@@ -3,24 +3,31 @@ import data_management.entity.UserInfo;
 import data_management.service.BookDataService;
 import data_management.service.UserDataService;
 import report.ReportUI;
+import util.SampleData;
 
 
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        // Add sample data
+        UserDataService userService = new UserDataService();
+        SampleData.addTestUsers(userService);
+
+        BookDataService bookDataService = new BookDataService();
+        SampleData.addTestBooks(bookDataService);
+        SampleData.addTestBorrowedBooks(bookDataService);
+
+        SampleData.addTestHistoryData();
+        SampleData.addTestPenaltiesRecord();
+
+        
+        
         librarySystem();
         new ReportUI().start();
     }
 
     public static void librarySystem() {
-
         UserDataService userService = new UserDataService();
-        util.SampleData.addTestUsers(userService);
-
-        BookDataService bookDataService = new BookDataService();
-        util.SampleData.addTestBooks(bookDataService);
-        util.SampleData.addTestBorrowedBooks(bookDataService);
-
 
         login.LoginManager loginManager = new login.LoginManager(userService);
         login.MenuHandler menuHandler = new login.MenuHandler(userService);
