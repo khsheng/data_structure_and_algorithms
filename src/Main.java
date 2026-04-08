@@ -19,8 +19,6 @@ public class Main {
 
         SampleData.addTestHistoryData();
         SampleData.addTestPenaltiesRecord();
-
-        
         
         librarySystem();
         new ReportUI().start();
